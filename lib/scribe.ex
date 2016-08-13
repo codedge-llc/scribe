@@ -1,51 +1,32 @@
 defmodule Scribe do
+  def mapper(%{__struct__: _struct} = x), do: Map.from_struct(x)
+  def mapper(%{} = map), do: map
 
-  def yeah(%{__struct__: struct}) do
-    IO.puts "I'm a #{inspect(struct)}"
+  def print(_results, opts \\ nil)
+  def print([], _opts), do: :ok
+  def print(results, opts) do
+    structs = Enum.map(results, fn(x) -> mapper(x) end)
+    keys = fetch_keys(structs, opts)
+    [keys] ++ Enum.map(structs, fn(row) ->
+      Enum.map(keys, fn(key) ->
+        row[key]
+      end)
+    end)
+    |> Scribe.Table.format(Enum.count(results), Enum.count(keys))
+    |> IO.puts
   end
 
-  def yeah(%{}) do
-    IO.puts "I'm a map!"
-  end
-
-  def pretty(results, opts \\ nil) do
-    structs = Enum.map(results, fn(x) -> Map.from_struct(x) end)
-    [first|_rest] = structs
-    keys =
-      case opts do
-        nil -> 
-          first
-          |> Map.delete(:__meta__)
-          |> Map.delete(:__struct__)
-          |> Map.keys()
-        opts -> opts
-      end
-    line = ~s(#{Enum.reduce(keys, "|", fn(x, acc) -> acc <> format_cell(first, x, :header) end)})
-    IO.puts "\n"
-    IO.puts String.duplicate("-", String.length(line))
-    IO.puts line
-    IO.puts String.duplicate("-", String.length(line))
-    for model <- results do
-      line = ~s(#{Enum.reduce(keys, "|", fn(x, acc) -> acc <> format_cell(Map.from_struct(model), x, :value) end)})
-      IO.puts line
-      IO.puts String.duplicate("-", String.length(line))
-    end
-    :ok
-  end
-
-  def format_cell(map, key, type) do
-    v = ~s(#{inspect(map[key])})
-    h = ~s(#{key})
-    diff = String.length(v) - String.length(h)
-    r = String.duplicate(" ", abs(diff))
-    cond do
-      diff >= 0 && type == :header -> " #{h}#{r} |"
-      diff >= 0 && type == :value -> " #{v} |"
-      diff < 0 && type == :header -> " #{h} |"
-      diff < 0 && type == :value -> " #{v}#{r} |"
+  defp fetch_keys([first|_rest], opts) do
+    case opts do
+      nil -> fetch_keys(first)
+      opts -> opts
     end
   end
 
-  def max_width(elems, key) do
+  defp fetch_keys(map) do
+    map
+    |> Map.delete(:__meta__)
+    |> Map.delete(:__struct__)
+    |> Map.keys()
   end
 end

@@ -11,11 +11,12 @@ defmodule Scribe.Table do
         |> get_length()
       end
 
-    IO.puts separator_line(widths)
-    for row <- data do
-      IO.puts data_line(row, widths)
-      IO.puts separator_line(widths)
-    end
+    result = separator_line(widths) <> "\n"
+    Enum.reduce(data, result, fn(row, acc) ->
+      acc
+      <> data_line(row, widths) <> "\n"
+      <> separator_line(widths) <> "\n"
+    end)
   end
 
   defp get_length(value) do
@@ -36,7 +37,6 @@ defmodule Scribe.Table do
     row
     |> Enum.zip(widths)
     |> Enum.reduce("|", fn({value, width}, acc) ->
-      #IO.puts("#{width} - #{String.length(cell_value(value, 0))}")
       diff = width - String.length(cell_value(value, 0))
       acc <> cell_value(value, diff) <> "|"
     end)
