@@ -2,7 +2,7 @@ defmodule Scribe.Table do
   def format(data, rows, cols) do
     widths =
       for c <- 0..cols-1 do
-        for r <- 0..rows-1 do
+        for r <- 0..rows do
           data
           |> Enum.at(r)
           |> Enum.at(c)
