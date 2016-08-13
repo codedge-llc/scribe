@@ -1,6 +1,4 @@
 defmodule Scribe do
-  def mapper(%{__struct__: _struct} = x), do: Map.from_struct(x)
-  def mapper(%{} = map), do: map
 
   def print(_results, opts \\ nil)
   def print([], _opts), do: :ok
@@ -15,6 +13,9 @@ defmodule Scribe do
     |> Scribe.Table.format(Enum.count(results), Enum.count(keys))
     |> IO.puts
   end
+
+  defp mapper(%{__struct__: _struct} = x), do: Map.from_struct(x)
+  defp mapper(%{} = map), do: map
 
   defp fetch_keys([first|_rest], opts) do
     case opts do
