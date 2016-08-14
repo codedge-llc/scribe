@@ -2,7 +2,10 @@ defmodule Scribe.TableTest do
   use ExUnit.Case
 
   test "format/3 returns formatted table string" do
-    data = [["test", 1234, "longer string"], [0, nil, :whatever]]
+    data = [
+      [~s("test"), ~s(1234), ~s("longer string")],
+      [~s(0), ~s(nil), ~s(:whatever)]
+    ]
 
     expected = """
     +--------+------+-----------------+
