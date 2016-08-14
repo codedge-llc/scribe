@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/codedge-llc/scribe.svg?branch=master)](https://travis-ci.org/codedge-llc/scribe)
+[![Hex.pm](http://img.shields.io/hexpm/v/scribe.svg)](https://hex.pm/packages/scribe)
 # Scribe
 
 Pretty-print tables of Elixir structs and maps. Inspired by [hirb](https://github.com/cldwalker/hirb).
@@ -14,7 +16,7 @@ Pretty-print tables of Elixir structs and maps. Inspired by [hirb](https://githu
 
 ## Usage
 
-Print an array of maps as a table. Header columns are taken from the map keys of the first element.
+Print a list of maps as a table. Header columns are taken from the map keys of the first element.
 ```
 iex(1)> data = [%{key: "value", another_key: 123}, %{key: "test", another_key: :key}]
 iex(2)> Scribe.print(data)
