@@ -28,9 +28,9 @@ defmodule Scribe do
   defp map_string_values(keys), do: Enum.map(keys, fn(x) -> string_value(x) end)
   defp map_string_values(row, keys), do: Enum.map(keys, fn(key) -> string_value(row, key) end)
 
-  defp string_value(%{name: name, key: key}), do: inspect(name)
-  defp string_value(map, %{name: name, key: key} = x) when is_function(key), do: inspect(key.(map))
-  defp string_value(map, %{name: name, key: key} = x), do: inspect(map[key])
+  defp string_value(%{name: name, key: _key}), do: inspect(name)
+  defp string_value(map, %{name: _name, key: key}) when is_function(key), do: inspect(key.(map))
+  defp string_value(map, %{name: _name, key: key}), do: inspect(map[key])
 
   defp mapper(%{__struct__: _struct} = x), do: Map.from_struct(x)
   defp mapper(%{} = map), do: map
