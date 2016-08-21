@@ -28,9 +28,9 @@ defmodule Scribe do
   defp map_string_values(keys), do: Enum.map(keys, fn(x) -> string_value(x) end)
   defp map_string_values(row, keys), do: Enum.map(keys, fn(key) -> string_value(row, key) end)
 
-  defp string_value(x), do: inspect(x)
-  defp string_value(map, x) when is_function(x), do: inspect(x.(map))
-  defp string_value(map, x), do: inspect(map[x])
+  defp string_value(%{name: name, key: key}), do: inspect(name)
+  defp string_value(map, %{name: name, key: key} = x) when is_function(key), do: inspect(key.(map))
+  defp string_value(map, %{name: name, key: key} = x), do: inspect(map[key])
 
   defp mapper(%{__struct__: _struct} = x), do: Map.from_struct(x)
   defp mapper(%{} = map), do: map
@@ -38,7 +38,16 @@ defmodule Scribe do
   defp fetch_keys([first | _rest], opts) do
     case opts do
       nil -> fetch_keys(first)
-      opts -> opts
+      opts -> process_headers(opts)
+    end
+  end
+
+  defp process_headers(opts) do
+    for opt <- opts do
+      case opt do
+        {name, key} -> %{name: name, key: key}
+        key -> %{name: key, key: key}
+      end
     end
   end
 
@@ -46,6 +55,7 @@ defmodule Scribe do
     map
     |> Map.delete(:__meta__)
     |> Map.delete(:__struct__)
-    |> Map.keys()
+    |> Map.keys
+    |> process_headers
   end
 end

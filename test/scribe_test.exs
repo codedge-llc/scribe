@@ -69,5 +69,61 @@ defmodule Scribe.ScribeTest do
 
       assert Scribe.format([t]) == expected
     end
+
+    test "displays only specified keys" do
+      t = %{test: 1234, key: "testing"}
+
+      expected = """
+      +-----------+
+      | :key      |
+      +-----------+
+      | "testing" |
+      +-----------+
+      """
+
+      assert Scribe.format([t], [:key]) == expected
+    end
+
+    test "displays specified keys with given titles" do
+      t = %{test: 1234, key: "testing"}
+
+      expected = """
+      +-----------+
+      | :title    |
+      +-----------+
+      | "testing" |
+      +-----------+
+      """
+
+      assert Scribe.format([t], [title: :key]) == expected
+    end
+
+    test "displays specified keys with given titles, some untitled" do
+      t = %{test: 1234, key: "testing"}
+
+      expected = """
+      +-----------+-------+
+      | :title    | :test |
+      +-----------+-------+
+      | "testing" | 1234  |
+      +-----------+-------+
+      """
+
+      assert Scribe.format([t], [{:title, :key}, :test]) == expected
+    end
+
+    test "does function with given title" do
+      t = %{test: 1234, key: "testing"}
+
+      expected = """
+      +-----------+
+      | "Caps"    |
+      +-----------+
+      | "TESTING" |
+      +-----------+
+      """
+
+      assert Scribe.format([t], [{"Caps", fn(x) -> String.upcase(x.key) end}]) == expected
+    end
   end
 end
