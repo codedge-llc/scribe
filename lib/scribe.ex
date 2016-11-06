@@ -19,14 +19,14 @@ defmodule Scribe do
     keys = fetch_keys(structs, opts)
 
     headers = map_string_values(keys)
-    data = Enum.map(structs, fn(row) -> map_string_values(row, keys) end)
+    data = Enum.map(structs, &map_string_values(&1, keys))
 
     [headers | data]
     |> Scribe.Table.format(Enum.count(results) + 1, Enum.count(keys))
   end
 
-  defp map_string_values(keys), do: Enum.map(keys, fn(x) -> string_value(x) end)
-  defp map_string_values(row, keys), do: Enum.map(keys, fn(key) -> string_value(row, key) end)
+  defp map_string_values(keys), do: Enum.map(keys, &string_value(&1))
+  defp map_string_values(row, keys), do: Enum.map(keys, &string_value(row, &1))
 
   defp string_value(%{name: name, key: _key}), do: inspect(name)
   defp string_value(map, %{name: _name, key: key}) when is_function(key), do: inspect(key.(map))
@@ -53,8 +53,6 @@ defmodule Scribe do
 
   defp fetch_keys(map) do
     map
-    |> Map.delete(:__meta__)
-    |> Map.delete(:__struct__)
     |> Map.keys
     |> process_headers
   end

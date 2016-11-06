@@ -4,7 +4,11 @@ defmodule Scribe.Table do
   """
 
   def format(data, rows, cols) do
-    widths = get_max_widths(data, rows, cols)
+    widths =
+      data
+      |> get_max_widths(rows, cols)
+      |> distribute_widths(76)
+    IO.puts "Sum #{Enum.sum(widths)}"
     result = separator_line(widths) <> "\n"
     Enum.reduce(data, result, fn(row, acc) ->
       acc
@@ -17,9 +21,23 @@ defmodule Scribe.Table do
     for c <- 0..cols - 1 do
       data
       |> get_column_widths(rows, c)
-      |> Enum.max_by(fn(x) -> get_width(x) end)
-      |> get_width()
+      |> Enum.max_by(&get_width(&1))
+      |> get_width
     end
+  end
+
+  defp get_width(value) do
+    value
+    |> cell_value(0, 1000)
+    |> String.length
+  end
+
+  defp distribute_widths(widths, max_size) do
+    sum = Enum.sum(widths) + (3 * Enum.count(widths))
+    Enum.map(widths, fn(x) ->
+      IO.inspect(x / sum)
+      round(((x + 3) / sum) * max_size ) |> IO.inspect
+    end)
   end
 
   defp get_column_widths(data, rows, col) do
@@ -28,12 +46,6 @@ defmodule Scribe.Table do
       |> Enum.at(row)
       |> Enum.at(col)
     end
-  end
-
-  defp get_width(value) do
-    value
-    |> cell_value(0)
-    |> String.length()
   end
 
   defp separator_line(widths) do
@@ -46,13 +58,24 @@ defmodule Scribe.Table do
     row
     |> Enum.zip(widths)
     |> Enum.reduce("|", fn({value, width}, acc) ->
-      diff = width - String.length(cell_value(value, 0))
-      acc <> cell_value(value, diff) <> "|"
+      diff = width - String.length(cell_value(value, 0, width))
+      #acc <> cell_value(value, diff, width) <> "|"
+      acc <> cell(value, width) <> "|"
     end)
   end
 
-  defp cell_value(x, padding) when padding >= 0 do
-    " #{x}#{String.duplicate(" ", padding)} "
+  defp cell(x, width) do
+    len = min(String.length(" #{x} "), width)
+    padding = String.duplicate(" ", width - len)
+    truncate(" #{x}#{padding}", width - 2) <> " "
   end
-  defp cell_value(x, _padding), do: " #{inspect(x)} "
+
+  defp cell_value(x, padding, max_width) when padding >= 0 do
+    truncate(" #{x}#{String.duplicate(" ", padding)} ", max_width)
+  end
+  defp cell_value(x, _padding, max_width), do: " #{truncate(inspect(x), max_width)} "
+
+  defp truncate(elem, width) do
+    String.slice(elem, 0..width)
+  end
 end
