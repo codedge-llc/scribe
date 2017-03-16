@@ -3,12 +3,18 @@ defmodule Scribe.Table do
     Handles all table formatting for pretty-printing.
   """
 
+  def total_width do
+    case Application.get_env(:scribe, :width) do
+      nil -> 80
+      width -> width
+    end
+  end
+
   def format(data, rows, cols) do
     widths =
       data
       |> get_max_widths(rows, cols)
-      |> distribute_widths(76)
-    IO.puts "Sum #{Enum.sum(widths)}"
+      |> distribute_widths(total_width - 8)
     result = separator_line(widths) <> "\n"
     Enum.reduce(data, result, fn(row, acc) ->
       acc
@@ -35,8 +41,7 @@ defmodule Scribe.Table do
   defp distribute_widths(widths, max_size) do
     sum = Enum.sum(widths) + (3 * Enum.count(widths))
     Enum.map(widths, fn(x) ->
-      IO.inspect(x / sum)
-      round(((x + 3) / sum) * max_size ) |> IO.inspect
+      round(((x + 3) / sum) * max_size)
     end)
   end
 
@@ -71,11 +76,17 @@ defmodule Scribe.Table do
   end
 
   defp cell_value(x, padding, max_width) when padding >= 0 do
-    truncate(" #{x}#{String.duplicate(" ", padding)} ", max_width)
+    truncate(" #{colorize(x)}#{String.duplicate(" ", padding)} ", max_width)
   end
-  defp cell_value(x, _padding, max_width), do: " #{truncate(inspect(x), max_width)} "
+  defp cell_value(x, _padding, max_width), do: " #{truncate(colorize(x), max_width)} "
 
   defp truncate(elem, width) do
     String.slice(elem, 0..width)
   end
+
+  def colorize(item) when is_binary(item), do: colorize(item, IO.ANSI.green)
+  def colorize(item) when is_atom(item), do: colorize(item, IO.ANSI.cyan)
+  def colorize(item), do: colorize(item, IO.ANSI.default_color)
+
+  def colorize(item, color), do: "#{color}#{item}#{IO.ANSI.reset}"
 end

@@ -3,6 +3,8 @@ defmodule Scribe do
     Pretty-print tables of structs and maps
   """
 
+  @colors [syntax_colors: [atom: :cyan, string: :green]]
+
   def print(_results, opts \\ nil)
   def print([], _opts), do: :ok
   def print(results, opts) do

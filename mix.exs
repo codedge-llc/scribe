@@ -6,11 +6,11 @@ defmodule Scribe.Mixfile do
      version: "0.2.0",
      elixir: "~> 1.3",
      source_url: "https://github.com/codedge-llc/scribe",
-     description: description,
-     package: package,
+     description: description(),
+     package: package(),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     deps: deps()]
   end
 
   defp description do
