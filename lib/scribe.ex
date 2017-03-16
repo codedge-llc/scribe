@@ -1,6 +1,6 @@
 defmodule Scribe do
   @moduledoc """
-    Pretty-print tables of structs and maps
+  Pretty-print tables of structs and maps
   """
 
   def print(_results, opts \\ nil)
@@ -21,26 +21,30 @@ defmodule Scribe do
   def format(results, opts) when not is_list(results), do: format([results], opts)
   def format(results, opts) do
     structs = Enum.map(results, fn(x) -> mapper(x) end)
-    keys = fetch_keys(structs, opts)
+    keys = fetch_keys(structs, opts[:data])
 
     headers = map_string_values(keys)
-    data = Enum.map(structs, fn(row) -> map_string_values(row, keys) end)
+    data = Enum.map(structs, &map_string_values(&1, keys))
 
     [headers | data]
-    |> Scribe.Table.format(Enum.count(results) + 1, Enum.count(keys))
+    |> Scribe.Table.format(Enum.count(results) + 1, Enum.count(keys), opts)
   end
 
-  defp map_string_values(keys), do: Enum.map(keys, fn(x) -> string_value(x) end)
-  defp map_string_values(row, keys), do: Enum.map(keys, fn(key) -> string_value(row, key) end)
+  defp map_string_values(keys), do: Enum.map(keys, &string_value(&1))
+  defp map_string_values(row, keys), do: Enum.map(keys, &string_value(row, &1))
 
-  defp string_value(%{name: name, key: _key}),
-    do: Kernel.inspect(name)
-  defp string_value(map, %{name: _name, key: key}) when is_function(key),
-    do: Kernel.inspect(key.(map))
-  defp string_value(map, %{name: _name, key: key}),
-    do: Kernel.inspect(map[key])
+  defp string_value(%{name: name, key: _key}) do
+    Kernel.inspect(name)
+  end
+  defp string_value(map, %{name: _name, key: key}) when is_function(key) do
+    map |> key.() |> Kernel.inspect
+  end
+  defp string_value(map, %{name: _name, key: key}) do
+    map |> Map.get(key) |> Kernel.inspect
+  end
 
-  defp mapper(%{__struct__: _struct} = x), do: Map.from_struct(x)
+  # Turns all strucs into maps
+  # defp mapper(%{__struct__: _struct} = x), do: Map.from_struct(x)
   defp mapper(%{} = map), do: map
 
   defp fetch_keys([first | _rest], opts) do
@@ -61,8 +65,6 @@ defmodule Scribe do
 
   defp fetch_keys(map) do
     map
-    |> Map.delete(:__meta__)
-    |> Map.delete(:__struct__)
     |> Map.keys
     |> process_headers
   end
