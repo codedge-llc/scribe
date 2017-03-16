@@ -11,6 +11,12 @@ defmodule Scribe do
     |> IO.puts
   end
 
+  def console(results, opts \\ nil) do
+    results
+    |> format(opts)
+    |> Pane.console
+  end
+
   def inspect(results, opts \\ nil) do
     print(results, opts)
     results
