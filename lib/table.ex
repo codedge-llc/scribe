@@ -64,7 +64,6 @@ defmodule Scribe.Table do
     |> Enum.zip(widths)
     |> Enum.reduce("|", fn({value, width}, acc) ->
       diff = width - String.length(cell_value(value, 0, width))
-      #acc <> cell_value(value, diff, width) <> "|"
       acc <> cell(value, width) <> "|"
     end)
   end
