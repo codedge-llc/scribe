@@ -3,14 +3,16 @@ defmodule Scribe.Mixfile do
 
   def project do
     [app: :scribe,
-     version: "0.2.0",
+     version: "0.3.0",
      elixir: "~> 1.3",
      source_url: "https://github.com/codedge-llc/scribe",
      description: description(),
      package: package(),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps()]
+     deps: deps(),
+     docs: [main: "readme",
+            extras: ["README.md"]]]
   end
 
   defp description do
