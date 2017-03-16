@@ -1,9 +1,7 @@
 defmodule Scribe do
   @moduledoc """
-    Pretty-print tables of structs and maps
+  Pretty-print tables of structs and maps
   """
-
-  @colors [syntax_colors: [atom: :cyan, string: :green]]
 
   def print(_results, opts \\ nil)
   def print([], _opts), do: :ok
@@ -35,14 +33,18 @@ defmodule Scribe do
   defp map_string_values(keys), do: Enum.map(keys, &string_value(&1))
   defp map_string_values(row, keys), do: Enum.map(keys, &string_value(row, &1))
 
-  defp string_value(%{name: name, key: _key}),
-    do: Kernel.inspect(name)
-  defp string_value(map, %{name: _name, key: key}) when is_function(key),
-    do: Kernel.inspect(key.(map))
-  defp string_value(map, %{name: _name, key: key}),
-    do: Kernel.inspect(map[key])
+  defp string_value(%{name: name, key: _key}) do
+    Kernel.inspect(name)
+  end
+  defp string_value(map, %{name: _name, key: key}) when is_function(key) do
+    map |> key.() |> Kernel.inspect
+  end
+  defp string_value(map, %{name: _name, key: key}) do
+    map |> Map.get(key) |> Kernel.inspect
+  end
 
-  defp mapper(%{__struct__: _struct} = x), do: Map.from_struct(x)
+  # Turns all strucs into maps
+  # defp mapper(%{__struct__: _struct} = x), do: Map.from_struct(x)
   defp mapper(%{} = map), do: map
 
   defp fetch_keys([first | _rest], opts) do
