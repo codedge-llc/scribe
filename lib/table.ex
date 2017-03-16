@@ -10,11 +10,12 @@ defmodule Scribe.Table do
     end
   end
 
-  def format(data, rows, cols) do
+  def format(data, rows, cols, opts \\ []) do
+    total_max_width = opts[:width] || total_width()
     widths =
       data
       |> get_max_widths(rows, cols)
-      |> distribute_widths(total_width - 8)
+      |> distribute_widths(total_max_width - 8)
     result = separator_line(widths) <> "\n"
     Enum.reduce(data, result, fn(row, acc) ->
       acc

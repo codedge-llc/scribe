@@ -81,7 +81,7 @@ defmodule Scribe.ScribeTest do
       +------------------------------------------------------------------------+
       """
 
-      assert Scribe.format([t], [:key]) == expected
+      assert Scribe.format([t], data: [:key]) == expected
     end
 
     test "displays specified keys with given titles" do
@@ -95,7 +95,7 @@ defmodule Scribe.ScribeTest do
       +------------------------------------------------------------------------+
       """
 
-      assert Scribe.format([t], [title: :key]) == expected
+      assert Scribe.format([t], data: [title: :key]) == expected
     end
 
     test "displays specified keys with given titles, some untitled" do
@@ -109,7 +109,7 @@ defmodule Scribe.ScribeTest do
       +---------------------------------------+---------------------------------+
       """
 
-      assert Scribe.format([t], [{:title, :key}, :test]) == expected
+      assert Scribe.format([t], data: [{:title, :key}, :test]) == expected
     end
 
     test "does function with given title" do
@@ -123,7 +123,7 @@ defmodule Scribe.ScribeTest do
       +------------------------------------------------------------------------+
       """
 
-      assert Scribe.format([t], [{"Caps", fn(x) -> String.upcase(x.key) end}]) == expected
+      assert Scribe.format([t], data: [{"Caps", fn(x) -> String.upcase(x.key) end}]) == expected
     end
   end
 end

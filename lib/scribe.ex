@@ -18,13 +18,13 @@ defmodule Scribe do
   def format(results, opts) when not is_list(results), do: format([results], opts)
   def format(results, opts) do
     structs = Enum.map(results, fn(x) -> mapper(x) end)
-    keys = fetch_keys(structs, opts)
+    keys = fetch_keys(structs, opts[:data])
 
     headers = map_string_values(keys)
     data = Enum.map(structs, &map_string_values(&1, keys))
 
     [headers | data]
-    |> Scribe.Table.format(Enum.count(results) + 1, Enum.count(keys))
+    |> Scribe.Table.format(Enum.count(results) + 1, Enum.count(keys), opts)
   end
 
   defp map_string_values(keys), do: Enum.map(keys, &string_value(&1))
