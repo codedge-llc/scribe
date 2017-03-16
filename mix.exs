@@ -29,7 +29,8 @@ defmodule Scribe.Mixfile do
     [
       {:pane, "~> 0.1"},
       {:ex_doc, ">= 0.0.0", only: :dev},
-      {:dogma, ">= 0.0.0", only: :dev}
+      {:dogma, ">= 0.0.0", only: :dev},
+      {:faker, ">= 0.0.0", only: [:dev, :test]}
     ]
   end
 

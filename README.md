@@ -8,11 +8,11 @@ Pretty-print tables of Elixir structs and maps. Inspired by [hirb](https://githu
 
   1. Add `scribe` to your list of dependencies in `mix.exs`:
 
-    ```elixir
-    def deps do
-      [{:scribe, "~> 0.3.0"}]
-    end
-    ```
+  ```elixir
+  def deps do
+    [{:scribe, "~> 0.3.0"}]
+  end
+  ```
 
 ## Usage
 
@@ -20,13 +20,13 @@ Print a list of maps as a table. Header columns are taken from the map keys of t
 ```elixir
 iex(1)> data = [%{key: "value", another_key: 123}, %{key: "test", another_key: :key}]
 iex(2)> Scribe.print(data)
-+--------------+---------+
-| :another_key | :key    |
-+--------------+---------+
-| 123          | "value" |
-+--------------+---------+
-| :key         | "test"  |
-+--------------+---------+
++----------------------------------------+--------------------------------+
+| :another_key                           | :key                           |
++----------------------------------------+--------------------------------+
+| 123                                    | "value"                        |
++----------------------------------------+--------------------------------+
+| :key                                   | "test"                         |
++----------------------------------------+--------------------------------+
 
 :ok
 ```
@@ -34,59 +34,119 @@ iex(2)> Scribe.print(data)
 Useful for printing results of Ecto queries
 ```elixir
 # %User{id: nil, email: nil}
-results =
-  User
-  |> limit(5)
-  |> Repo.all
-  |> Scribe.print
+User
+|> limit(5)
+|> Repo.all
+|> Scribe.print
 
-+------+----------------------------------+
-| :id  | :email                           |
-+------+----------------------------------+
-| 1240 | "keanu2045@predovic.name"        |
-+------+----------------------------------+
-| 1241 | "rosetta1994@kiehn.name"         |
-+------+----------------------------------+
-| 1242 | "concepcion.fahey@schiller.name" |
-+------+----------------------------------+
-| 1243 | "madge1915@towne.biz"            |
-+------+----------------------------------+
-| 1244 | "casimir1935@smith.net"          |
-+------+----------------------------------+
++----------------------+-----------------------------------+----------------+
+| :__struct__          | :email                            | :id            |
++----------------------+-----------------------------------+----------------+
+| User                 | "myles_fisher@beahan.com"         | 5171           |
++----------------------+-----------------------------------+----------------+
+| User                 | "dawson_bartell@lynch.org"        | 4528           |
++----------------------+-----------------------------------+----------------+
+| User                 | "hassan1972@langworth.com"        | 1480           |
++----------------------+-----------------------------------+----------------+
+| User                 | "kiera.schulist@koch.com"         | 2084           |
++----------------------+-----------------------------------+----------------+
+| User                 | "cynthia1970@mann.name"           | 6599           |
++----------------------+-----------------------------------+----------------+
 
 :ok
+```
+
+## Pagination
+
+Scribe uses [pane](https://github.com/codedge-llc/pane) to paginate large tables.
+Use with `Scribe.console/2`.
+
+```elixir
+# %User{id: nil, email: nil, first_name: nil, last_name: nil}
+User
+|> limit(5)
+|> Repo.all
+|> Scribe.console
+
++-------------+------------------------+-------------+---------+------------+
+| :__struct__ | :email                 | :first_name | :id     | :last_name |
++-------------+------------------------+-------------+---------+------------+
+| User        | "celestine_satterfield | "Gene"      | 9061    | "Krajcik"  |
++-------------+------------------------+-------------+---------+------------+
+| User        | "lynn1978@bednar.org"  | "Maeve"     | 9865    | "Gerlach"  |
++-------------+------------------------+-------------+---------+------------+
+| User        | "melisa1975@hilll.biz" | "Theodora"  | 2262    | "Wunsch"   |
++-------------+------------------------+-------------+---------+------------+
+| User        | "furman.grady@ryan.org | "Oswaldo"   | 4977    | "Simonis"  |
++-------------+------------------------+-------------+---------+------------+
+| User        | "caesar_hirthe@reynold | "Arjun"     | 3907    | "Prohaska" |
++-------------+------------------------+-------------+---------+------------+
+
+
+[1 of 1] (j)next (k)prev (q)quit
 ```
 
 ## Customizing Tables
 
-`Scribe.print/2` takes a list of of columns to customize output. You can use either the atom key or customize the header with `{"Custom Title", :key}`.
+`Scribe.print/2` takes a list of of columns on the `:data` options key to
+customize output. You can use either the atom key or customize the header
+with `{"Custom Title", :key}`.
 
 ```elixir
 # %User{id: nil, email: nil, first_name: nil, last_name: nil}
-results =
-  User
-  |> limit(5)
-  |> Repo.all
-  |> Scribe.print(u, [{"ID", :id}, :first_name, :last_name])
+
+User
+|> limit(5)
+|> Repo.all
+|> Scribe.print(data: [{"ID", :id}, :first_name, :last_name])
  
-+------+-------------+------------+
-| "ID" | :first_name | :last_name |
-+------+-------------+------------+
-| 1240 | "Danielle"  | "Spencer"  |
-+------+-------------+------------+
-| 1241 | "Dovie"     | "Prosacco" |
-+------+-------------+------------+
-| 1242 | "Elyse"     | "Tromp"    |
-+------+-------------+------------+
-| 1243 | "Jalen"     | "Gutmann"  |
-+------+-------------+------------+
-| 1244 | "Broderick" | "Rice"     |
-+------+-------------+------------+
++-------------------+---------------------------+--------------------------+
+| "ID"              | :first_name               | :last_name               |
++-------------------+---------------------------+--------------------------+
+| 9061              | "Gene"                    | "Krajcik"                |
++-------------------+---------------------------+--------------------------+
+| 9865              | "Maeve"                   | "Gerlach"                |
++-------------------+---------------------------+--------------------------+
+| 2262              | "Theodora"                | "Wunsch"                 |
++-------------------+---------------------------+--------------------------+
+| 4977              | "Oswaldo"                 | "Simonis"                |
++-------------------+---------------------------+--------------------------+
+| 3907              | "Arjun"                   | "Prohaska"               |
++-------------------+---------------------------+--------------------------+
 
 :ok
 ```
 
-## Function Columns
+### Custom Width
+
+Pass a `:width` option to define the table width.
+
+```elixir
+# %User{id: nil, email: nil, first_name: nil, last_name: nil}
+
+User
+|> limit(5)
+|> Repo.all
+|> Scribe.print(data: [{"ID", :id}, :first_name, :last_name], width: 40)
+ 
++---------+------------+-----------+
+| "ID"    | :first_nam | :last_nam |
++---------+------------+-----------+
+| 9061    | "Gene"     | "Krajcik" |
++---------+------------+-----------+
+| 9865    | "Maeve"    | "Gerlach" |
++---------+------------+-----------+
+| 2262    | "Theodora" | "Wunsch"  |
++---------+------------+-----------+
+| 4977    | "Oswaldo"  | "Simonis" |
++---------+------------+-----------+
+| 3907    | "Arjun"    | "Prohaska |
++---------+------------+-----------+
+
+:ok
+```
+
+### Function Columns
 
 You can specify functions that take the given row's struct or map as its only argument.
 ```elixir
@@ -96,20 +156,20 @@ results =
   |> limit(5)
   |> Repo.all
   |> Scribe.print(u, [{"ID", :id}, {"Full Name", fn(x) -> "#{x.last_name}, #{x.first_name}" end}])
-  
-+------+---------------------+
-| "ID" | "Full Name"         |
-+------+---------------------+
-| 1240 | "Spencer, Danielle" |
-+------+---------------------+
-| 1241 | "Prosacco, Dovie"   |
-+------+---------------------+
-| 1242 | "Tromp, Elyse"      |
-+------+---------------------+
-| 1243 | "Gutmann, Jalen"    |
-+------+---------------------+
-| 1244 | "Rice, Broderick"   |
-+------+---------------------+
+
++--------------------------+----------------------------------------------+
+| "ID"                     | "Full Name"                                  |
++--------------------------+----------------------------------------------+
+| 9061                     | "Krajcik, Gene"                              |
++--------------------------+----------------------------------------------+
+| 9865                     | "Gerlach, Maeve"                             |
++--------------------------+----------------------------------------------+
+| 2262                     | "Wunsch, Theodora"                           |
++--------------------------+----------------------------------------------+
+| 4977                     | "Simonis, Oswaldo"                           |
++--------------------------+----------------------------------------------+
+| 3907                     | "Prohaska, Arjun"                            |
++--------------------------+----------------------------------------------+
 
 :ok
 ```
