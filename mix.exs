@@ -3,7 +3,7 @@ defmodule Scribe.Mixfile do
 
   def project do
     [app: :scribe,
-     version: "0.4.0",
+     version: "0.4.1",
      elixir: "~> 1.3",
      source_url: "https://github.com/codedge-llc/scribe",
      description: description(),
@@ -22,7 +22,7 @@ defmodule Scribe.Mixfile do
   end
 
   def application do
-    [applications: [:logger]]
+    [applications: [:logger, :pane]]
   end
 
   defp deps do
