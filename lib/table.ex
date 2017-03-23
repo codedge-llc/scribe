@@ -3,9 +3,18 @@ defmodule Scribe.Table do
     Handles all table formatting for pretty-printing.
   """
 
+  alias Scribe.TableStyle
+  alias Scribe.Table.Line
+
+  def table_style(opts) do
+    opts[:style]
+    || Application.get_env(:scribe, :style)
+    || TableStyle.default()
+  end
+
   def total_width do
     case Application.get_env(:scribe, :width) do
-      nil -> 80
+      nil -> 120
       width -> width
     end
   end
@@ -16,12 +25,23 @@ defmodule Scribe.Table do
       data
       |> get_max_widths(rows, cols)
       |> distribute_widths(total_max_width - 8)
-    result = separator_line(widths) <> "\n"
-    Enum.reduce(data, result, fn(row, acc) ->
-      acc
-      <> data_line(row, widths) <> "\n"
-      <> separator_line(widths) <> "\n"
-    end)
+
+    style = table_style(opts)
+
+    [headers | data] = data
+
+    header =
+      Line.frame_line(widths, style)
+      <> header_line(headers, widths, style)
+      <> Line.header_separator_line(widths, style)
+
+    body =
+      Enum.map(data, fn(row) ->
+        data_line(row, widths, style)
+      end)
+      |> Enum.join(Line.data_separator_line(widths, style))
+
+    header <> body <> Line.frame_line(widths, style)
   end
 
   defp get_max_widths(data, rows, cols) do
@@ -60,13 +80,32 @@ defmodule Scribe.Table do
     end)
   end
 
-  defp data_line(row, widths) do
-    row
-    |> Enum.zip(widths)
-    |> Enum.reduce("|", fn({value, width}, acc) ->
-      # diff = width - String.length(cell_value(value, 0, width))
-      acc <> cell(value, width) <> "|"
-    end)
+  defp header_line(row, widths, style) do
+    header_v = style.header_vertical_separator
+    frame_v = style.frame_vertical
+
+    segments =
+      row
+      |> Enum.zip(widths)
+      |> Enum.map(fn({value, width}) ->
+          cell(value, width)
+         end)
+
+    frame_v <> Enum.join(segments, header_v) <> frame_v <> "\n"
+  end
+
+  defp data_line(row, widths, style) do
+    data_v = style.data_vertical_separator
+    frame_v = style.frame_vertical
+
+    segments =
+      row
+      |> Enum.zip(widths)
+      |> Enum.map(fn({value, width}) ->
+          cell(value, width)
+         end)
+
+    frame_v <> Enum.join(segments, data_v) <> frame_v <> "\n"
   end
 
   defp cell(x, width) do
