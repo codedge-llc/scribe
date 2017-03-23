@@ -1,4 +1,7 @@
 defmodule Scribe.TableStyle.Default do
+  @moduledoc ~S"""
+  Default Scribe.Table style.
+  """
   @behaviour Scribe.TableStyle
 
   def display_frame? do

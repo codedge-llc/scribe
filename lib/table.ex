@@ -36,9 +36,8 @@ defmodule Scribe.Table do
       <> Line.header_separator_line(widths, style)
 
     body =
-      Enum.map(data, fn(row) ->
-        data_line(row, widths, style)
-      end)
+      data
+      |> Enum.map(& data_line(&1, widths, style))
       |> Enum.join(Line.data_separator_line(widths, style))
 
     header <> body <> Line.frame_line(widths, style)

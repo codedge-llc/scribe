@@ -1,4 +1,7 @@
 defmodule Scribe.Table.Line do
+  @moduledoc ~S"""
+  Convenience functions for drawing separator/frame lines.
+  """
 
   def frame_line(widths, style) do
     if style.display_frame? do

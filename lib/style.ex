@@ -1,4 +1,8 @@
 defmodule Scribe.TableStyle do
+  @moduledoc """
+  Defines Scribe.Table styling callbacks.
+  """
+
   def default, do: Scribe.TableStyle.Default
 
   @callback display_frame? :: boolean
