@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/codedge-llc/scribe.svg?branch=master)](https://travis-ci.org/codedge-llc/scribe)
 [![Hex.pm](http://img.shields.io/hexpm/v/scribe.svg)](https://hex.pm/packages/scribe)
+[![Hex.pm](http://img.shields.io/hexpm/dt/scribe.svg)](https://hex.pm/packages/scribe)
 # Scribe
 
 Pretty-print tables of Elixir structs and maps. Inspired by [hirb](https://github.com/cldwalker/hirb).
