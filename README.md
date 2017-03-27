@@ -21,12 +21,12 @@ Print a list of maps or structs as a table. Header columns are taken from the ke
 ```elixir
 iex(1)> data = [%{key: "value", another_key: 123}, %{key: "test", another_key: :key}]
 iex(2)> Scribe.print(data)
-+----------------------------------------+--------------------------------+
-| :another_key                           | :key                           |
-+----------------------------------------+--------------------------------+
-| 123                                    | "value"                        |
-| :key                                   | "test"                         |
-+----------------------------------------+--------------------------------+
++----------------+-------------+
+| :another_key   | :key        |
++----------------+-------------+
+| 123            | "value"     |
+| :key           | "test"      |
++----------------+-------------+
 
 :ok
 ```
@@ -39,15 +39,15 @@ User
 |> Repo.all
 |> Scribe.print
 
-+----------------------+-----------------------------------+----------------+
-| :__struct__          | :email                            | :id            |
-+----------------------+-----------------------------------+----------------+
-| User                 | "myles_fisher@beahan.com"         | 5171           |
-| User                 | "dawson_bartell@lynch.org"        | 4528           |
-| User                 | "hassan1972@langworth.com"        | 1480           |
-| User                 | "kiera.schulist@koch.com"         | 2084           |
-| User                 | "cynthia1970@mann.name"           | 6599           |
-+----------------------+-----------------------------------+----------------+
++-------------+----------------------------+------+
+| :__struct__ | :email                     | :id  |
++-------------+----------------------------+------+
+| User        | "myles_fisher@beahan.com"  | 5171 |
+| User        | "dawson_bartell@lynch.org" | 4528 |
+| User        | "hassan1972@langworth.com" | 1480 |
+| User        | "kiera.schulist@koch.com"  | 2084 |
+| User        | "cynthia1970@mann.name"    | 6599 |
++-------------+----------------------------+------+
 
 :ok
 ```
@@ -64,15 +64,15 @@ User
 |> Repo.all
 |> Scribe.console
 
-+-------------+------------------------+-------------+---------+------------+
-| :__struct__ | :email                 | :first_name | :id     | :last_name |
-+-------------+------------------------+-------------+---------+------------+
-| User        | "celestine_satterfield | "Gene"      | 9061    | "Krajcik"  |
-| User        | "lynn1978@bednar.org"  | "Maeve"     | 9865    | "Gerlach"  |
-| User        | "melisa1975@hilll.biz" | "Theodora"  | 2262    | "Wunsch"   |
-| User        | "furman.grady@ryan.org | "Oswaldo"   | 4977    | "Simonis"  |
-| User        | "caesar_hirthe@reynold | "Arjun"     | 3907    | "Prohaska" |
-+-------------+------------------------+-------------+---------+------------+
++-------------+------------------------+-------------+-------+------------+
+| :__struct__ | :email                 | :first_name | :id   | :last_name |
++-------------+------------------------+-------------+-------+------------+
+| User        | "celestine_satterfield | "Gene"      | 9061  | "Krajcik"  |
+| User        | "lynn1978@bednar.org"  | "Maeve"     | 9865  | "Gerlach"  |
+| User        | "melisa1975@hilll.biz" | "Theodora"  | 2262  | "Wunsch"   |
+| User        | "furman.grady@ryan.org | "Oswaldo"   | 4977  | "Simonis"  |
+| User        | "caesar_hirthe@reynold | "Arjun"     | 3907  | "Prohaska" |
++-------------+------------------------+-------------+-------+------------+
 
 
 [1 of 1] (j)next (k)prev (q)quit
@@ -92,40 +92,15 @@ User
 |> Repo.all
 |> Scribe.print(data: [{"ID", :id}, :first_name, :last_name])
  
-+-------------------+---------------------------+--------------------------+
-| "ID"              | :first_name               | :last_name               |
-+-------------------+---------------------------+--------------------------+
-| 9061              | "Gene"                    | "Krajcik"                |
-| 9865              | "Maeve"                   | "Gerlach"                |
-| 2262              | "Theodora"                | "Wunsch"                 |
-| 4977              | "Oswaldo"                 | "Simonis"                |
-| 3907              | "Arjun"                   | "Prohaska"               |
-+-------------------+---------------------------+--------------------------+
-
-:ok
-```
-
-### Custom Width
-
-Pass a `:width` option to define the table width.
-
-```elixir
-# %User{id: nil, email: nil, first_name: nil, last_name: nil}
-
-User
-|> limit(5)
-|> Repo.all
-|> Scribe.print(data: [{"ID", :id}, :first_name, :last_name], width: 40)
- 
-+---------+------------+-----------+
-| "ID"    | :first_nam | :last_nam |
-+---------+------------+-----------+
-| 9061    | "Gene"     | "Krajcik" |
-| 9865    | "Maeve"    | "Gerlach" |
-| 2262    | "Theodora" | "Wunsch"  |
-| 4977    | "Oswaldo"  | "Simonis" |
-| 3907    | "Arjun"    | "Prohaska |
-+---------+------------+-----------+
++------+--------------+-------------+
+| "ID" | :first_name  | :last_name  |
++------+--------------+-------------+
+| 9061 | "Gene"       | "Krajcik"   |
+| 9865 | "Maeve"      | "Gerlach"   |
+| 2262 | "Theodora"   | "Wunsch"    |
+| 4977 | "Oswaldo"    | "Simonis"   |
+| 3907 | "Arjun"      | "Prohaska"  |
++------+--------------+-------------+
 
 :ok
 ```
