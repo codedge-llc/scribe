@@ -26,32 +26,28 @@ defmodule Scribe do
   def format([], _opts), do: :ok
   def format(results, opts) when not is_list(results), do: format([results], opts)
   def format(results, opts) do
-    structs = Enum.map(results, fn(x) -> mapper(x) end)
-    keys = fetch_keys(structs, opts[:data])
+    keys = fetch_keys(results, opts[:data])
 
     headers = map_string_values(keys)
-    data = Enum.map(structs, &map_string_values(&1, keys))
+    data = Enum.map(results, &map_string_values(&1, keys))
 
-    [headers | data]
-    |> Scribe.Table.format(Enum.count(results) + 1, Enum.count(keys), opts)
+    table = [headers | data]
+    Scribe.Table.format(table, Enum.count(table), Enum.count(keys), opts)
   end
 
   defp map_string_values(keys), do: Enum.map(keys, &string_value(&1))
   defp map_string_values(row, keys), do: Enum.map(keys, &string_value(row, &1))
 
   defp string_value(%{name: name, key: _key}) do
-    Kernel.inspect(name)
-  end
-  defp string_value(map, %{name: _name, key: key}) when is_function(key) do
-    map |> key.() |> Kernel.inspect
-  end
-  defp string_value(map, %{name: _name, key: key}) do
-    map |> Map.get(key) |> Kernel.inspect
+    name
   end
 
-  # Turns all strucs into maps
-  # defp mapper(%{__struct__: _struct} = x), do: Map.from_struct(x)
-  defp mapper(%{} = map), do: map
+  defp string_value(map, %{name: _name, key: key}) when is_function(key) do
+    map |> key.()
+  end
+  defp string_value(map, %{name: _name, key: key}) do
+    map |> Map.get(key)
+  end
 
   defp fetch_keys([first | _rest], opts) do
     case opts do
