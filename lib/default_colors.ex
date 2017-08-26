@@ -1,7 +1,8 @@
 defmodule Scribe.DefaultColors do
-  @moduledoc """
-  Defines default colors for printing. These are the same as IEx defaults.
-  """
+  @moduledoc false
+
+  # Defines default colors for printing. These are the same as IEx defaults.
+
   defmacro __using__(_) do
     quote do
       def color(value) when is_boolean(value), do: IO.ANSI.magenta

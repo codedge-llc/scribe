@@ -1,7 +1,5 @@
 defmodule Scribe.Table do
-  @moduledoc """
-    Handles all table formatting for pretty-printing.
-  """
+  @moduledoc false
 
   alias Scribe.{Formatter, Style}
 

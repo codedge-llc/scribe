@@ -4,9 +4,8 @@ defmodule Scribe.Formatter.Index do
 end
 
 defmodule Scribe.Formatter.Line do
-  @moduledoc ~S"""
-  Formats rows and row separators for printing.
-  """
+  @moduledoc false
+
   defstruct data: [], widths: [], style: nil, opts: [], index: nil
 
   alias Scribe.Formatter.{Index, Line}

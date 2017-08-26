@@ -1,7 +1,6 @@
 defmodule Scribe.Style.Default do
-  @moduledoc ~S"""
-  Default styling for tables.
-  """
+  @moduledoc false
+
   alias Scribe.Border
 
   @behaviour Scribe.Style

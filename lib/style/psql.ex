@@ -1,7 +1,5 @@
 defmodule Scribe.Style.Psql do
-  @moduledoc ~S"""
-  Scribe.Table style that resembles psql tables.
-  """
+  @moduledoc false
 
   @behaviour Scribe.Style
 

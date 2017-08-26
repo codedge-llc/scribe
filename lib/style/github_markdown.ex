@@ -1,7 +1,5 @@
 defmodule Scribe.Style.GithubMarkdown do
-  @moduledoc ~S"""
-  Scribe.Table style for Github markdown formatting.
-  """
+  @moduledoc false
 
   @behaviour Scribe.Style
 
