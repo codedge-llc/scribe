@@ -6,5 +6,5 @@ otp_release:
   - 19.0
   - 20.0
 script:
-  - "MIX_ENV=test mix do deps.get, compile, coveralls.travis"
   - mix dogma
+  - "MIX_ENV=test mix do deps.get, compile, coveralls.travis"
