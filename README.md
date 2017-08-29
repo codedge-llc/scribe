@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/codedge-llc/scribe.svg?branch=master)](https://travis-ci.org/codedge-llc/scribe)
+[![Coverage Status](https://coveralls.io/repos/github/codedge-llc/scribe/badge.svg?branch=master)](https://coveralls.io/github/codedge-llc/scribe?branch=master)
 [![Hex.pm](http://img.shields.io/hexpm/v/scribe.svg)](https://hex.pm/packages/scribe)
 [![Hex.pm](http://img.shields.io/hexpm/dt/scribe.svg)](https://hex.pm/packages/scribe)
 # Scribe
