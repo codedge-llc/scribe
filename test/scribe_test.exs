@@ -137,5 +137,24 @@ defmodule Scribe.ScribeTest do
       )
       assert actual == expected
     end
+
+    test "respects width option" do
+      t = %{test: 1234, key: "testing"}
+
+      expected = """
+      +-------------------------+-----------------+
+      | :title                  | :test           |
+      +-------------------------+-----------------+
+      | "testing"               | 1234            |
+      +-------------------------+-----------------+
+      """
+
+      actual = Scribe.format([t],
+        data: [{:title, :key}, :test],
+        colorize: false,
+        width: 50
+      )
+      assert actual == expected
+    end
   end
 end
