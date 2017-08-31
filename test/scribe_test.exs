@@ -1,7 +1,10 @@
 defmodule Scribe.ScribeTest do
   defstruct id: nil, value: 1234
+
   use ExUnit.Case
-  doctest Scribe
+  # doctest Scribe, import: true
+
+  import ExUnit.CaptureIO
 
   describe "format/2" do
     test "includes __struct__ attributes" do
@@ -156,5 +159,11 @@ defmodule Scribe.ScribeTest do
       )
       assert actual == expected
     end
+  end
+
+  test "print/2 outputs proper IO" do
+    fun = fn -> Scribe.print(%{test: 1234}, colorize: false) end
+    exp = "+---------+\n| :test   |\n+---------+\n| 1234    |\n+---------+\n\n"
+    assert capture_io(fun) == exp
   end
 end

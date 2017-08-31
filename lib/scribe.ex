@@ -3,7 +3,43 @@ defmodule Scribe do
   Pretty-print tables of structs and maps
   """
 
-  def print(_results, opts \\ nil)
+  @type data :: []
+              | [...]
+              | term
+
+  @typedoc ~S"""
+  Options for configuring table output.
+
+  - `:colorize` - When `false`, disables colored output. Defaults to `true`
+  - `:data` - Defines table headers
+  - `:style` - Style callback module. Defaults to `Scribe.Style.Default`
+  - `:width` - Defines table width. Defaults to `:infinite`
+  """
+  @type format_opts :: [
+    colorize: boolean,
+    data: [...],
+    style: module,
+    width: integer
+  ]
+
+  @doc ~S"""
+  Prints a table from given data.
+
+  ## Examples
+
+      iex> print([])
+      :ok
+
+      iex> Scribe.print(%{key: :value, test: 1234}, colorize: false)
+      +----------+---------+
+      | :key     | :test   |
+      +----------+---------+
+      | :value   | 1234    |
+      +----------+---------+
+      :ok
+  """
+  @spec print(data, format_opts) :: :ok
+  def print(_results, opts \\ [])
   def print([], _opts), do: :ok
   def print(results, opts) do
     results
@@ -17,12 +53,43 @@ defmodule Scribe do
     |> Pane.console
   end
 
-  def inspect(results, opts \\ nil) do
+  @doc ~S"""
+  Prints a table from given data and returns the data.
+
+  Useful for inspecting pipe chains.
+
+  ## Examples
+
+      iex> Scribe.inspect([])
+      []
+
+      iex> Scribe.inspect(%{key: :value, test: 1234}, colorize: false)
+      +----------+---------+
+      | :key     | :test   |
+      +----------+---------+
+      | :value   | 1234    |
+      +----------+---------+
+      %{test: 1234, key: :value}
+  """
+  @spec inspect(term, format_opts) :: term
+  def inspect(results, opts \\ []) do
     print(results, opts)
     results
   end
 
-  def format(_results, opts \\ nil)
+  @doc ~S"""
+  Formats data into a printable table string.
+
+  ## Examples
+
+      iex> format([])
+      :ok
+
+      iex> format(%{test: 1234}, colorize: false)
+      "+---------+\n| :test   |\n+---------+\n| 1234    |\n+---------+\n"
+  """
+  @spec format([] | [...] | term) :: String.t | :ok
+  def format(_results, opts \\ [])
   def format([], _opts), do: :ok
   def format(results, opts) when not is_list(results), do: format([results], opts)
   def format(results, opts) do
