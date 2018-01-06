@@ -5,7 +5,6 @@ end
 
 defmodule Scribe.Formatter.Line do
   @moduledoc false
-
   defstruct data: [], widths: [], style: nil, opts: [], index: nil
 
   alias Scribe.Formatter.{Index, Line}
@@ -20,8 +19,15 @@ defmodule Scribe.Formatter.Line do
     <> bottom(line)
   end
 
-  def data(%Line{data: row, widths: widths, style: style, opts: opts, index: index}) do
-    left_edge = style.border_at(index.row, 0, index.row_max, index.col_max).left_edge
+  def data(%Line{data: row,
+                 widths: widths,
+                 style: style,
+                 opts: opts,
+                 index: index}) do
+
+    border = style.border_at(index.row, 0, index.row_max, index.col_max)
+    left_edge = border.left_edge
+
     line =
       Enum.reduce(0..index.col_max - 1, "", fn(x, acc) ->
         b = style.border_at(index.row, x, index.row_max, index.col_max)
@@ -50,7 +56,9 @@ defmodule Scribe.Formatter.Line do
   def cell_value(x, padding, max_width) when padding >= 0 do
     truncate(" #{inspect(x)}#{String.duplicate(" ", padding)} ", max_width)
   end
-  def cell_value(x, _padding, max_width), do: " #{x |> inspect() |> truncate(max_width)} "
+  def cell_value(x, _padding, max_width) do
+    " #{x |> inspect() |> truncate(max_width)} "
+  end
 
   defp truncate(elem, width) do
     String.slice(elem, 0..width)
@@ -61,7 +69,9 @@ defmodule Scribe.Formatter.Line do
   end
 
   def top(%Line{widths: widths, style: style, index: index}) do
-    top_left = style.border_at(index.row, 0, index.row_max, index.col_max).top_left_corner
+    border = style.border_at(index.row, 0, index.row_max, index.col_max)
+    top_left = border.top_left_corner
+
     line =
       Enum.reduce(0..index.col_max - 1, "", fn(x, acc) ->
         b = style.border_at(index.row, x, index.row_max, index.col_max)
@@ -76,7 +86,9 @@ defmodule Scribe.Formatter.Line do
   end
 
   def bottom(%Line{widths: widths, style: style, index: index}) do
-    bottom_left = style.border_at(index.row, 0, index.row_max, index.col_max).bottom_left_corner
+    border = style.border_at(index.row, 0, index.row_max, index.col_max)
+    bottom_left = border.bottom_left_corner
+
     line =
       Enum.reduce(0..index.col_max - 1, "", fn(x, acc) ->
         b = style.border_at(index.row, x, index.row_max, index.col_max)

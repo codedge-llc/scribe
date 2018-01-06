@@ -3,6 +3,8 @@ defmodule Scribe do
   Pretty-print tables of structs and maps
   """
 
+  alias Scribe.Table
+
   @type data :: []
               | [...]
               | term
@@ -99,7 +101,7 @@ defmodule Scribe do
     data = Enum.map(results, &map_string_values(&1, keys))
 
     table = [headers | data]
-    Scribe.Table.format(table, Enum.count(table), Enum.count(keys), opts)
+    Table.format(table, Enum.count(table), Enum.count(keys), opts)
   end
 
   defp map_string_values(keys), do: Enum.map(keys, &string_value(&1))
@@ -135,6 +137,6 @@ defmodule Scribe do
   defp fetch_keys(map) do
     map
     |> Map.keys
-    |> process_headers
+    |> process_headers()
   end
 end
