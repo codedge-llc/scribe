@@ -29,7 +29,7 @@ defmodule Scribe.Style.Psql do
       bottom_right_corner: "",
       bottom_edge: "-",
       bottom_left_corner: "+",
-      left_edge: "|",
+      left_edge: "|"
     }
   end
 
@@ -43,7 +43,7 @@ defmodule Scribe.Style.Psql do
       bottom_right_corner: "+",
       bottom_edge: "-",
       bottom_left_corner: "+",
-      left_edge: "|",
+      left_edge: "|"
     }
   end
 
@@ -57,7 +57,7 @@ defmodule Scribe.Style.Psql do
       bottom_right_corner: "",
       bottom_edge: "",
       bottom_left_corner: "",
-      left_edge: "",
+      left_edge: ""
     }
   end
 
@@ -71,7 +71,7 @@ defmodule Scribe.Style.Psql do
       bottom_right_corner: "",
       bottom_edge: "",
       bottom_left_corner: "",
-      left_edge: "|",
+      left_edge: "|"
     }
   end
 
@@ -85,7 +85,7 @@ defmodule Scribe.Style.Psql do
       bottom_right_corner: "",
       bottom_edge: "",
       bottom_left_corner: "",
-      left_edge: "|",
+      left_edge: "|"
     }
   end
 end

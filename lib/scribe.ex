@@ -5,16 +5,17 @@ defmodule Scribe do
 
   def print(_results, opts \\ nil)
   def print([], _opts), do: :ok
+
   def print(results, opts) do
     results
     |> format(opts)
-    |> IO.puts
+    |> IO.puts()
   end
 
   def console(results, opts \\ nil) do
     results
     |> format(opts)
-    |> Pane.console
+    |> Pane.console()
   end
 
   def inspect(results, opts \\ nil) do
@@ -24,7 +25,11 @@ defmodule Scribe do
 
   def format(_results, opts \\ nil)
   def format([], _opts), do: :ok
-  def format(results, opts) when not is_list(results), do: format([results], opts)
+
+  def format(results, opts) when not is_list(results) do
+    format([results], opts)
+  end
+
   def format(results, opts) do
     keys = fetch_keys(results, opts[:data])
 
@@ -45,6 +50,7 @@ defmodule Scribe do
   defp string_value(map, %{name: _name, key: key}) when is_function(key) do
     map |> key.()
   end
+
   defp string_value(map, %{name: _name, key: key}) do
     map |> Map.get(key)
   end
@@ -67,7 +73,7 @@ defmodule Scribe do
 
   defp fetch_keys(map) do
     map
-    |> Map.keys
+    |> Map.keys()
     |> process_headers
   end
 end

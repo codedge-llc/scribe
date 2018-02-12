@@ -20,20 +20,22 @@ defmodule Scribe.Table do
 
   def format(data, rows, cols, opts \\ []) do
     total_width = printable_width(opts)
+
     widths =
       data
       |> get_max_widths(rows, cols)
       |> distribute_widths(total_width)
 
     style = table_style(opts)
+
     index = %Scribe.Formatter.Index{
       row: 0,
       col: 0,
       row_max: Enum.count(data),
-      col_max: data |> Enum.at(0) |> Enum.count
+      col_max: data |> Enum.at(0) |> Enum.count()
     }
 
-    Enum.reduce(0..index.row_max - 1, "", fn(x, acc) ->
+    Enum.reduce(0..(index.row_max - 1), "", fn x, acc ->
       row = Enum.at(data, x)
       i = %{index | row: x}
 
@@ -50,7 +52,7 @@ defmodule Scribe.Table do
   end
 
   defp get_max_widths(data, rows, cols) do
-    for c <- 0..cols - 1 do
+    for c <- 0..(cols - 1) do
       data
       |> get_column_widths(rows, c)
       |> Enum.max_by(&get_width(&1))
@@ -62,21 +64,23 @@ defmodule Scribe.Table do
     value
     |> inspect()
     |> Formatter.Line.cell_value(0, 5000)
-    |> String.length
+    |> String.length()
   end
 
   defp distribute_widths(widths, :infinity) do
     widths
   end
+
   defp distribute_widths(widths, max_size) do
-    sum = Enum.sum(widths) + (3 * Enum.count(widths))
-    Enum.map(widths, fn(x) ->
-      round(((x + 3) / sum) * max_size)
+    sum = Enum.sum(widths) + 3 * Enum.count(widths)
+
+    Enum.map(widths, fn x ->
+      round((x + 3) / sum * max_size)
     end)
   end
 
   defp get_column_widths(data, rows, col) do
-    for row <- 0..rows - 1 do
+    for row <- 0..(rows - 1) do
       data
       |> Enum.at(row)
       |> Enum.at(col)

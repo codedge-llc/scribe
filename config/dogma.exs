@@ -4,6 +4,6 @@ alias Dogma.Rule
 config :dogma,
   rule_set: Dogma.RuleSet.All,
   override: [
-    %Rule.LineLength{ max_length: 100 },
-    %Rule.TakenName{ enabled: false }
+    %Rule.LineLength{max_length: 100},
+    %Rule.TakenName{enabled: false}
   ]

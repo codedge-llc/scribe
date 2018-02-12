@@ -29,7 +29,7 @@ defmodule Scribe.Style.GithubMarkdown do
       bottom_right_corner: "",
       bottom_edge: "",
       bottom_left_corner: "",
-      left_edge: "|",
+      left_edge: "|"
     }
   end
 end

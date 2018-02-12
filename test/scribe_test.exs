@@ -113,10 +113,13 @@ defmodule Scribe.ScribeTest do
       +---------------+---------+
       """
 
-      actual = Scribe.format([t],
-        data: [{:title, :key}, :test],
-        colorize: false,
-      )
+      actual =
+        Scribe.format(
+          [t],
+          data: [{:title, :key}, :test],
+          colorize: false
+        )
+
       assert actual == expected
     end
 
@@ -131,10 +134,13 @@ defmodule Scribe.ScribeTest do
       +---------------+
       """
 
-      actual = Scribe.format([t],
-        data: [{"Caps", fn(x) -> String.upcase(x.key) end}],
-        colorize: false
-      )
+      actual =
+        Scribe.format(
+          [t],
+          data: [{"Caps", fn x -> String.upcase(x.key) end}],
+          colorize: false
+        )
+
       assert actual == expected
     end
 
@@ -149,11 +155,14 @@ defmodule Scribe.ScribeTest do
       +-------------------------+-----------------+
       """
 
-      actual = Scribe.format([t],
-        data: [{:title, :key}, :test],
-        colorize: false,
-        width: 50
-      )
+      actual =
+        Scribe.format(
+          [t],
+          data: [{:title, :key}, :test],
+          colorize: false,
+          width: 50
+        )
+
       assert actual == expected
     end
   end

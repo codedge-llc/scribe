@@ -9,15 +9,16 @@ defmodule Scribe.Mixfile do
       source_url: "https://github.com/codedge-llc/scribe",
       description: description(),
       package: package(),
-      build_embedded: Mix.env == :prod,
-      start_permanent: Mix.env == :prod,
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
       deps: deps(),
       docs: [
-        main: "readme", extras: ["README.md"]
+        main: "readme",
+        extras: ["README.md"]
       ],
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
-        "coveralls": :test,
+        coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.post": :test,
         "coveralls.html": :test
@@ -51,10 +52,10 @@ defmodule Scribe.Mixfile do
 
   defp package do
     [
-       files: ["lib", "mix.exs", "README*", "LICENSE*"],
-       maintainers: ["Henry Popp"],
-       licenses: ["MIT"],
-       links: %{"GitHub" => "https://github.com/codedge-llc/scribe"}
+      files: ["lib", "mix.exs", "README*", "LICENSE*"],
+      maintainers: ["Henry Popp"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/codedge-llc/scribe"}
     ]
   end
 end
