@@ -1,3 +1,6 @@
+# v0.5.1
+* Bump pane dependency to v0.2.0
+
 # v0.5.0
 * `@behaviour Scribe.Style` implemented (See `/style` for example adapters)
 * Colorized output

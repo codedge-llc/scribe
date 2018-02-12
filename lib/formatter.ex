@@ -5,7 +5,6 @@ end
 
 defmodule Scribe.Formatter.Line do
   @moduledoc false
-
   defstruct data: [], widths: [], style: nil, opts: [], index: nil
 
   alias Scribe.Formatter.{Index, Line}
@@ -27,8 +26,8 @@ defmodule Scribe.Formatter.Line do
       index: index
     } = line
 
-    left_edge =
-      style.border_at(index.row, 0, index.row_max, index.col_max).left_edge
+    border = style.border_at(index.row, 0, index.row_max, index.col_max)
+    left_edge = border.left_edge
 
     line =
       Enum.reduce(0..(index.col_max - 1), "", fn x, acc ->
@@ -71,8 +70,8 @@ defmodule Scribe.Formatter.Line do
   end
 
   def top(%Line{widths: widths, style: style, index: index}) do
-    top_left =
-      style.border_at(index.row, 0, index.row_max, index.col_max).top_left_corner
+    border = style.border_at(index.row, 0, index.row_max, index.col_max)
+    top_left = border.top_left_corner
 
     line =
       Enum.reduce(0..(index.col_max - 1), "", fn x, acc ->
@@ -86,8 +85,8 @@ defmodule Scribe.Formatter.Line do
   end
 
   def bottom(%Line{widths: widths, style: style, index: index}) do
-    bottom_left =
-      style.border_at(index.row, 0, index.row_max, index.col_max).bottom_left_corner
+    border = style.border_at(index.row, 0, index.row_max, index.col_max)
+    bottom_left = border.bottom_left_corner
 
     line =
       Enum.reduce(0..(index.col_max - 1), "", fn x, acc ->

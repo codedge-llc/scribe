@@ -1,7 +1,8 @@
 defmodule Scribe.Table do
   @moduledoc false
 
-  alias Scribe.{Formatter, Style}
+  alias Scribe.Style
+  alias Scribe.Formatter.{Index, Line}
 
   def table_style(opts) do
     opts[:style] || Style.default()
@@ -28,7 +29,7 @@ defmodule Scribe.Table do
 
     style = table_style(opts)
 
-    index = %Scribe.Formatter.Index{
+    index = %Index{
       row: 0,
       col: 0,
       row_max: Enum.count(data),
@@ -39,7 +40,7 @@ defmodule Scribe.Table do
       row = Enum.at(data, x)
       i = %{index | row: x}
 
-      line = %Formatter.Line{
+      line = %Line{
         data: row,
         widths: widths,
         style: style,
@@ -47,7 +48,7 @@ defmodule Scribe.Table do
         opts: opts
       }
 
-      acc <> Formatter.Line.format(line)
+      acc <> Line.format(line)
     end)
   end
 
@@ -63,7 +64,7 @@ defmodule Scribe.Table do
   defp get_width(value) do
     value
     |> inspect()
-    |> Formatter.Line.cell_value(0, 5000)
+    |> Line.cell_value(0, 5000)
     |> String.length()
   end
 
