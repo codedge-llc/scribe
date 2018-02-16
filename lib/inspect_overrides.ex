@@ -3,6 +3,9 @@ import Inspect.Algebra
 
 version = System.version() |> Version.parse!()
 
+ignore? = Code.compiler_options()[:ignore_module_conflict]
+Code.compiler_options(ignore_module_conflict: true)
+
 case version do
   %{major: 1, minor: 6} ->
     defimpl Inspect, for: List do
@@ -258,3 +261,5 @@ case version do
 			end
 		end	
 end
+
+Code.compiler_options(ignore_module_conflict: ignore?)
