@@ -5,7 +5,7 @@ defmodule Scribe.Mixfile do
     [
       app: :scribe,
       version: "0.5.1",
-      elixir: "~> 1.3",
+      elixir: "~> 1.5",
       source_url: "https://github.com/codedge-llc/scribe",
       description: description(),
       package: package(),

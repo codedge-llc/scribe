@@ -25,6 +25,19 @@ defmodule Scribe do
           width: integer
         ]
 
+  def enable do
+    Application.put_env(:scribe, :enable, true)
+  end
+
+  def disable do
+    Application.put_env(:scribe, :enable, false)
+  end
+
+  def enabled? do
+    Application.get_env(:scribe, :enable, true)
+  end
+
+
   @doc ~S"""
   Prints a table from given data.
 
@@ -145,117 +158,5 @@ defmodule Scribe do
     map
     |> Map.keys()
     |> process_headers()
-  end
-end
-
-defimpl Inspect, for: List do
-  alias Code.Identifier
-  import Inspect.Algebra
-
-  def inspect([], _opts) do
-    "[]"
-  end
-  def inspect([head | _rest] = term, opts) when is_map(head) do
-    if Enum.any?(term, &(!is_map(&1))) do
-      do_inspect(term, opts)
-    else
-      Scribe.format(term)
-    end
-  end
-
-  def do_inspect(term, opts) do
-    %Inspect.Opts{
-      charlists: lists,
-      char_lists: lists_deprecated,
-      printable_limit: printable_limit
-    } = opts
-
-    lists =
-      if lists == :infer and lists_deprecated != :infer do
-        case lists_deprecated do
-          :as_char_lists ->
-            IO.warn(
-              "the :char_lists inspect option and its :as_char_lists " <>
-                "value are deprecated, use the :charlists option and its " <>
-                ":as_charlists value instead"
-            )
-
-            :as_charlists
-
-          _ ->
-            IO.warn("the :char_lists inspect option is deprecated, use :charlists instead")
-            lists_deprecated
-        end
-      else
-        lists
-      end
-
-    open = color("[", :list, opts)
-    sep = color(",", :list, opts)
-    close = color("]", :list, opts)
-
-    cond do
-      lists == :as_charlists or (lists == :infer and List.ascii_printable?(term, printable_limit)) ->
-        inspected =
-          case Identifier.escape(IO.chardata_to_string(term), ?', printable_limit) do
-            {escaped, ""} -> [?', escaped, ?']
-            {escaped, _} -> [?', escaped, ?', " ++ ..."]
-          end
-
-        IO.iodata_to_binary(inspected)
-
-      keyword?(term) ->
-        container_doc(open, term, close, opts, &keyword/2, separator: sep, break: :strict)
-
-      true ->
-        container_doc(open, term, close, opts, &to_doc/2, separator: sep)
-    end
-	end
-
-	@doc false
-  def keyword({key, value}, opts) do
-    key = color(Identifier.inspect_as_key(key), :atom, opts)
-    concat(key, concat(" ", to_doc(value, opts)))
-  end
-
-  @doc false
-  def keyword?([{key, _value} | rest]) when is_atom(key) do
-    case Atom.to_charlist(key) do
-      'Elixir.' ++ _ -> false
-      _ -> keyword?(rest)
-    end
-  end
-
-  def keyword?([]), do: true
-  def keyword?(_other), do: false
-end
-
-defimpl Inspect, for: Map do
-  import Inspect.Algebra
-
-  def inspect(map, opts) do
-    inspect(map, "", opts)
-  end
-
-  def inspect(map, name, opts) do
-    # map = :maps.to_list(map)
-    # open = color("%" <> name <> "{", :map, opts)
-    # sep = color(",", :map, opts)
-    # close = color("}", :map, opts)
-    # container_doc(open, map, close, opts, traverse_fun(map, opts), separator: sep, break: :strict)
-    Scribe.format([map])
-  end
-
-  defp traverse_fun(list, opts) do
-    if Inspect.List.keyword?(list) do
-      &Inspect.List.keyword/2
-    else
-      sep = color(" => ", :map, opts)
-      &to_map(&1, &2, sep)
-    end
-  end
-
-  defp to_map({key, value}, opts, sep) do
-    concat(concat(to_doc(key, opts), sep), to_doc(value, opts))
   end
 end
