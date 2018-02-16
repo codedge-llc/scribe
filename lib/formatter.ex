@@ -81,7 +81,7 @@ defmodule Scribe.Formatter.Line do
         acc <> String.duplicate(b.top_edge, width) <> b.top_right_corner
       end)
 
-    top_left <> add_newline(line)
+    style.default_color() <> top_left <> add_newline(line)
   end
 
   def bottom(%Line{widths: widths, style: style, index: index}) do
