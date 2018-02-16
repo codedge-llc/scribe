@@ -2,7 +2,6 @@ defmodule Scribe.ScribeTest do
   defstruct id: nil, value: 1234
 
   use ExUnit.Case
-  # doctest Scribe, import: true
 
   import ExUnit.CaptureIO
 

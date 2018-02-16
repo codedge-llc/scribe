@@ -25,6 +25,19 @@ defmodule Scribe do
           width: integer
         ]
 
+  def enable do
+    Application.put_env(:scribe, :enable, true)
+  end
+
+  def disable do
+    Application.put_env(:scribe, :enable, false)
+  end
+
+  def enabled? do
+    Application.get_env(:scribe, :enable, true)
+  end
+
+
   @doc ~S"""
   Prints a table from given data.
 

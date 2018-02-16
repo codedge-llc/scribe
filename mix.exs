@@ -4,8 +4,8 @@ defmodule Scribe.Mixfile do
   def project do
     [
       app: :scribe,
-      version: "0.5.1",
-      elixir: "~> 1.3",
+      version: "0.6.0",
+      elixir: "~> 1.5",
       source_url: "https://github.com/codedge-llc/scribe",
       description: description(),
       package: package(),

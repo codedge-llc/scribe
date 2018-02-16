@@ -69,7 +69,7 @@ defmodule Scribe.Formatter.Line do
     "#{color}#{string}#{IO.ANSI.reset()}"
   end
 
-  def top(%Line{widths: widths, style: style, index: index}) do
+  def top(%Line{widths: widths, style: style, index: index, opts: opts}) do
     border = style.border_at(index.row, 0, index.row_max, index.col_max)
     top_left = border.top_left_corner
 
@@ -81,7 +81,14 @@ defmodule Scribe.Formatter.Line do
         acc <> String.duplicate(b.top_edge, width) <> b.top_right_corner
       end)
 
-    top_left <> add_newline(line)
+    color_prefix =
+      if Keyword.get(opts, :colorize, true) do
+        style.default_color()
+      else
+        ""
+      end
+
+    color_prefix <> top_left <> add_newline(line)
   end
 
   def bottom(%Line{widths: widths, style: style, index: index}) do
