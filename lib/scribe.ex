@@ -33,10 +33,17 @@ defmodule Scribe do
     Application.put_env(:scribe, :enable, false)
   end
 
+  @doc ~S"""
+  Returns true if Scribe is overriding `Inspect`.
+
+  ## Examples
+    
+      iex> Scribe.enabled?
+      true
+  """
   def enabled? do
     Application.get_env(:scribe, :enable, true)
   end
-
 
   @doc ~S"""
   Prints a table from given data.
@@ -64,7 +71,7 @@ defmodule Scribe do
     |> IO.puts()
   end
 
-  def console(results, opts \\ nil) do
+  def console(results, opts \\ []) do
     results
     |> format(opts)
     |> Pane.console()
@@ -138,12 +145,8 @@ defmodule Scribe do
     map |> Map.get(key)
   end
 
-  defp fetch_keys([first | _rest], opts) do
-    case opts do
-      nil -> fetch_keys(first)
-      opts -> process_headers(opts)
-    end
-  end
+  defp fetch_keys([first | _rest], nil), do: fetch_keys(first)
+  defp fetch_keys([first | _rest], opts), do: process_headers(opts)
 
   defp process_headers(opts) do
     for opt <- opts do

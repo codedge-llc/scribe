@@ -169,9 +169,35 @@ defmodule Scribe.ScribeTest do
     end
   end
 
-  test "print/2 outputs proper IO" do
-    fun = fn -> Scribe.print(%{test: 1234}, colorize: false) end
-    exp = "+---------+\n| :test   |\n+---------+\n| 1234    |\n+---------+\n\n"
-    assert capture_io(fun) == exp
+  describe "print/2" do
+    test "outputs proper IO" do
+      fun = fn -> Scribe.print(%{test: 1234}) end
+
+      exp = """
+      \e[39m+---------+
+      |\e[36m :test   \e[0m|
+      +---------+
+      |\e[33m 1234    \e[0m|
+      +---------+
+
+      """
+
+      assert capture_io(fun) == exp
+    end
+
+    test "outputs proper IO with opts" do
+      fun = fn -> Scribe.print(%{test: 1234}, colorize: false) end
+
+      exp =
+        "+---------+\n| :test   |\n+---------+\n| 1234    |\n+---------+\n\n"
+
+      assert capture_io(fun) == exp
+    end
+  end
+
+  test "Scribe.inspect/2 returns original data" do
+    val = %{test: 1234}
+    fun = fn -> Scribe.inspect(val) end
+    assert capture_io(fun) == inspect(val) <> "\n"
   end
 end

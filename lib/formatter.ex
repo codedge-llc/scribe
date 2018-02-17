@@ -57,10 +57,6 @@ defmodule Scribe.Formatter.Line do
     truncate(" #{inspect(x)}#{String.duplicate(" ", padding)} ", max_width)
   end
 
-  def cell_value(x, _padding, max_width) do
-    " #{x |> inspect() |> truncate(max_width)} "
-  end
-
   defp truncate(elem, width) do
     String.slice(elem, 0..width)
   end

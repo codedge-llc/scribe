@@ -11,12 +11,12 @@ defmodule Scribe.StyleTest do
       # Whitespace stripping breaks docstrings
       expected =
         "+--------------------+-------+----------+\n" <>
-        "| :__struct__        | :id   | :value   |\n" <>
-        "+--------------------+-------+----------+\n" <>
-        "| Scribe.StyleTest   | nil   | 1234     |\n" <>
-        "| Scribe.StyleTest   | nil   | 1234     |\n" <>
-        "| Scribe.StyleTest   | nil   | 1234     |\n" <>
-        "+--------------------+-------+----------+\n"
+          "| :__struct__        | :id   | :value   |\n" <>
+          "+--------------------+-------+----------+\n" <>
+          "| Scribe.StyleTest   | nil   | 1234     |\n" <>
+          "| Scribe.StyleTest   | nil   | 1234     |\n" <>
+          "| Scribe.StyleTest   | nil   | 1234     |\n" <>
+          "+--------------------+-------+----------+\n"
 
       opts = [colorize: false, style: Scribe.Style.Default]
       actual = Scribe.format([t, t, t], opts)
@@ -33,11 +33,11 @@ defmodule Scribe.StyleTest do
       # Whitespace stripping breaks docstrings
       expected =
         "                                       \n" <>
-        " :__struct__        | :id   | :value   \n" <>
-        "--------------------+-------+----------\n" <>
-        " Scribe.StyleTest   | nil   | 1234     \n" <>
-        " Scribe.StyleTest   | nil   | 1234     \n" <>
-        " Scribe.StyleTest   | nil   | 1234     \n"
+          " :__struct__        | :id   | :value   \n" <>
+          "--------------------+-------+----------\n" <>
+          " Scribe.StyleTest   | nil   | 1234     \n" <>
+          " Scribe.StyleTest   | nil   | 1234     \n" <>
+          " Scribe.StyleTest   | nil   | 1234     \n"
 
       opts = [colorize: false, style: Scribe.Style.Psql]
       actual = Scribe.format([t, t, t], opts)
@@ -54,11 +54,11 @@ defmodule Scribe.StyleTest do
       # Whitespace stripping breaks docstrings
       expected =
         "                                         \n" <>
-        "| :__struct__        | :id   | :value   |\n" <>
-        "|--------------------|-------|----------|\n" <>
-        "| Scribe.StyleTest   | nil   | 1234     |\n" <>
-        "| Scribe.StyleTest   | nil   | 1234     |\n" <>
-        "| Scribe.StyleTest   | nil   | 1234     |\n"
+          "| :__struct__        | :id   | :value   |\n" <>
+          "|--------------------|-------|----------|\n" <>
+          "| Scribe.StyleTest   | nil   | 1234     |\n" <>
+          "| Scribe.StyleTest   | nil   | 1234     |\n" <>
+          "| Scribe.StyleTest   | nil   | 1234     |\n"
 
       opts = [colorize: false, style: Scribe.Style.GithubMarkdown]
       actual = Scribe.format([t, t, t], opts)

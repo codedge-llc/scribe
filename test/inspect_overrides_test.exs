@@ -71,15 +71,50 @@ defmodule Scribe.InspectOverridesTest do
     assert inspect([t, t, t]) == expected
   end
 
-  test "Scribe.disable turns off formatting" do
+  test "Scribe.enabled? returns status" do
+    Scribe.disable()
+    refute Scribe.enabled?()
+
+    Scribe.enable()
+    assert Scribe.enabled?()
+
+    on_exit(fn -> Scribe.enable() end)
+  end
+
+  test "Scribe.enable turns on formatting" do
     Scribe.disable()
 
     t = %{test: 1234, key: "testing"}
 
-    expected = "%{key: \"testing\", test: 1234}"
+    assert inspect(t) == "%{key: \"testing\", test: 1234}"
+
+    Scribe.enable()
+
+    expected = """
+    \e[39m+---------------+---------+
+    |\e[36m :key          \e[0m|\e[36m :test   \e[0m|
+    +---------------+---------+
+    |\e[32m \"testing\"     \e[0m|\e[33m 1234    \e[0m|
+    +---------------+---------+
+    """
 
     assert inspect(t) == expected
 
-    Scribe.enable()
+    on_exit(fn -> Scribe.enable() end)
+  end
+
+  test "Scribe.disable turns off formatting" do
+    Scribe.disable()
+
+    t = [%{test: 1234, key: "testing"}]
+    expected = "[%{key: \"testing\", test: 1234}]"
+    assert inspect(t) == expected
+
+    assert inspect(%Scribe.InspectOverridesTest{}) ==
+             "%Scribe.InspectOverridesTest{id: nil, value: 1234}"
+
+    assert inspect(%{"test" => 1234}) == ~s(%{"test" => 1234})
+
+    on_exit(fn -> Scribe.enable() end)
   end
 end
