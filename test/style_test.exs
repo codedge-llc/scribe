@@ -65,4 +65,26 @@ defmodule Scribe.StyleTest do
       assert actual == expected
     end
   end
+
+  describe "pseudo" do
+    test "outputs correct format" do
+      t = %Scribe.StyleTest{}
+      refute t.id
+      assert t.value == 1234
+
+      # Whitespace stripping breaks docstrings
+      expected =
+        "┌────────────────────┬───────┬──────────┐\n" <>
+        "│ :__struct__        │ :id   │ :value   │\n" <>
+        "├────────────────────┼───────┼──────────┤\n" <>
+        "│ Scribe.StyleTest   │ nil   │ 1234     │\n" <>
+        "│ Scribe.StyleTest   │ nil   │ 1234     │\n" <>
+        "│ Scribe.StyleTest   │ nil   │ 1234     │\n" <>
+        "└────────────────────┴───────┴──────────┘\n"
+
+      opts = [colorize: false, style: Scribe.Style.Pseudo]
+      actual = Scribe.format([t, t, t], opts)
+      assert actual == expected
+    end
+  end
 end
