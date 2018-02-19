@@ -37,7 +37,7 @@ defmodule Scribe do
   Returns true if Scribe is overriding `Inspect`.
 
   ## Examples
-    
+
       iex> Scribe.enabled?
       true
   """
@@ -146,7 +146,7 @@ defmodule Scribe do
   end
 
   defp fetch_keys([first | _rest], nil), do: fetch_keys(first)
-  defp fetch_keys([first | _rest], opts), do: process_headers(opts)
+  defp fetch_keys(_list, opts), do: process_headers(opts)
 
   defp process_headers(opts) do
     for opt <- opts do
