@@ -13,7 +13,7 @@ Pretty-print tables of Elixir structs and maps. Inspired by [hirb](https://githu
   ```elixir
   def deps do
     [
-      {:scribe, "~> 0.6.0"}
+      {:scribe, "~> 0.7"}
     ]
   end
   ```
@@ -98,7 +98,7 @@ User
 |> limit(5)
 |> Repo.all
 |> Scribe.print(data: [{"ID", :id}, :first_name, :last_name])
- 
+
 +------+--------------+-------------+
 | "ID" | :first_name  | :last_name  |
 +------+--------------+-------------+
@@ -204,6 +204,22 @@ iex> Scribe.print(data, style: Scribe.Style.GithubMarkdown)
 | 756   | "2017-03-27 14:42:34.097553Z"     | "DE016DFF477BEDDB"     |
 | 484   | "2017-03-27 14:42:34.097572Z"     | "9194A82EF4BB0123"     |
 | 780   | "2017-03-27 14:42:34.097591Z"     | "BF92748B4AAAF14A"     |
+```
+
+*Pseudo*
+
+```elixir
+iex> Scribe.print(data, style: Scribe.Style.Pseudo)
+
+┌───────┬───────────────────────────────────┬────────────────────────┐
+│ :id   │ :inserted_at                      │ :key                   │
+├───────┼───────────────────────────────────┼────────────────────────┤
+│ 457   │ "2017-03-27 14:42:34.095202Z"     │ "CEB0E055ECDF6028"     │
+│ 326   │ "2017-03-27 14:42:34.097519Z"     │ "CF67027F7235B88D"     │
+│ 756   │ "2017-03-27 14:42:34.097553Z"     │ "DE016DFF477BEDDB"     │
+│ 484   │ "2017-03-27 14:42:34.097572Z"     │ "9194A82EF4BB0123"     │
+│ 780   │ "2017-03-27 14:42:34.097591Z"     │ "BF92748B4AAAF14A"     │
+└───────┴───────────────────────────────────┴────────────────────────┘
 ```
 
 Set a default one in your Mix config, e.g. `config :scribe, style: Scribe.Style.Psql`
