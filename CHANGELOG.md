@@ -1,3 +1,6 @@
+# v0.7.0
+* Pseudographics style added
+
 # v0.6.0
 * Overrides Inspect protocol for `List` and `Map`. These types will now
   automatically return in Scribe's table format. Disable by default

@@ -75,12 +75,12 @@ defmodule Scribe.StyleTest do
       # Whitespace stripping breaks docstrings
       expected =
         "┌────────────────────┬───────┬──────────┐\n" <>
-        "│ :__struct__        │ :id   │ :value   │\n" <>
-        "├────────────────────┼───────┼──────────┤\n" <>
-        "│ Scribe.StyleTest   │ nil   │ 1234     │\n" <>
-        "│ Scribe.StyleTest   │ nil   │ 1234     │\n" <>
-        "│ Scribe.StyleTest   │ nil   │ 1234     │\n" <>
-        "└────────────────────┴───────┴──────────┘\n"
+          "│ :__struct__        │ :id   │ :value   │\n" <>
+          "├────────────────────┼───────┼──────────┤\n" <>
+          "│ Scribe.StyleTest   │ nil   │ 1234     │\n" <>
+          "│ Scribe.StyleTest   │ nil   │ 1234     │\n" <>
+          "│ Scribe.StyleTest   │ nil   │ 1234     │\n" <>
+          "└────────────────────┴───────┴──────────┘\n"
 
       opts = [colorize: false, style: Scribe.Style.Pseudo]
       actual = Scribe.format([t, t, t], opts)
