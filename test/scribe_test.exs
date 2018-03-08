@@ -1,7 +1,7 @@
 defmodule Scribe.ScribeTest do
   defstruct id: nil, value: 1234
 
-  use ExUnit.Case
+  use ExUnit.Case, async: false
 
   import ExUnit.CaptureIO
 
@@ -197,7 +197,7 @@ defmodule Scribe.ScribeTest do
 
   test "Scribe.inspect/2 returns original data" do
     val = %{test: 1234}
-    fun = fn -> Scribe.inspect(val) end
-    assert capture_io(fun) == inspect(val) <> "\n"
+    fun = fn -> assert Scribe.inspect(val) == val end
+    capture_io(fun)
   end
 end

@@ -25,14 +25,6 @@ defmodule Scribe do
           width: integer
         ]
 
-  def enable do
-    Application.put_env(:scribe, :enable, true)
-  end
-
-  def disable do
-    Application.put_env(:scribe, :enable, false)
-  end
-
   @doc ~S"""
   Returns true if Scribe is overriding `Inspect`.
 
@@ -42,7 +34,13 @@ defmodule Scribe do
       true
   """
   def enabled? do
-    Application.get_env(:scribe, :enable, true)
+    compile_auto_inspect?() and
+      Application.get_env(:scribe, :auto_inspect, true)
+  end
+
+  @doc false
+  def compile_auto_inspect? do
+    Application.get_env(:scribe, :compile_auto_inspect, false)
   end
 
   @doc ~S"""

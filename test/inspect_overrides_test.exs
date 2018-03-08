@@ -1,7 +1,24 @@
 defmodule Scribe.InspectOverridesTest do
   defstruct id: nil, value: 1234
 
-  use ExUnit.Case
+  use ExUnit.Case, async: false
+
+  def set_auto_inspect(enabled?) do
+    Application.put_env(:scribe, :auto_inspect, enabled?)
+  end
+
+  def set_compile_auto_inspect(enabled?) do
+    Application.put_env(:scribe, :compile_auto_inspect, enabled?)
+  end
+
+  def set_config(enabled?) do
+    [:auto_inspect, :compile_auto_inspect]
+    |> Enum.each(&Application.put_env(:scribe, &1, enabled?))
+  end
+
+  setup do
+    set_config(true)
+  end
 
   test "empty list inspects correctly" do
     assert inspect([]) == "[]"
@@ -71,24 +88,31 @@ defmodule Scribe.InspectOverridesTest do
     assert inspect([t, t, t]) == expected
   end
 
-  test "Scribe.enabled? returns status" do
-    Scribe.disable()
-    refute Scribe.enabled?()
+  test "Scribe.enabled? returns correct status for config options" do
+    # {:compile_auto_inspect, :auto_inspect, Scribe.enabled?()}
+    [
+      {true, true, true},
+      {true, false, false},
+      {false, true, false},
+      {false, false, false}
+    ]
+    |> Enum.each(fn {compile?, enable?, result} ->
+      set_compile_auto_inspect(compile?)
+      set_auto_inspect(enable?)
+      assert Scribe.enabled?() == result
+    end)
 
-    Scribe.enable()
-    assert Scribe.enabled?()
-
-    on_exit(fn -> Scribe.enable() end)
+    on_exit(fn -> set_config(true) end)
   end
 
-  test "Scribe.enable turns on formatting" do
-    Scribe.disable()
+  test "formatting is used when Scribe.enabled?()" do
+    set_config(false)
 
     t = %{test: 1234, key: "testing"}
 
     assert inspect(t) == "%{key: \"testing\", test: 1234}"
 
-    Scribe.enable()
+    set_config(true)
 
     expected = """
     \e[39m+---------------+---------+
@@ -100,21 +124,6 @@ defmodule Scribe.InspectOverridesTest do
 
     assert inspect(t) == expected
 
-    on_exit(fn -> Scribe.enable() end)
-  end
-
-  test "Scribe.disable turns off formatting" do
-    Scribe.disable()
-
-    t = [%{test: 1234, key: "testing"}]
-    expected = "[%{key: \"testing\", test: 1234}]"
-    assert inspect(t) == expected
-
-    assert inspect(%Scribe.InspectOverridesTest{}) ==
-             "%Scribe.InspectOverridesTest{id: nil, value: 1234}"
-
-    assert inspect(%{"test" => 1234}) == ~s(%{"test" => 1234})
-
-    on_exit(fn -> Scribe.enable() end)
+    on_exit(fn -> set_config(true) end)
   end
 end
