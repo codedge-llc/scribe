@@ -22,7 +22,7 @@ if Scribe.compile_auto_inspect?() do
     end
 
     defp do_inspect?(term) do
-      Enum.any?(term, &(!is_map(&1))) or not Scribe.enabled?()
+      Enum.any?(term, &(!is_map(&1))) or not Scribe.auto_inspect?()
     end
 
     def do_inspect(term, opts) do
@@ -116,7 +116,7 @@ if Scribe.compile_auto_inspect?() do
     end
 
     def inspect(map, name, opts) do
-      if Scribe.enabled?() do
+      if Scribe.auto_inspect?() do
         Scribe.format([map])
       else
         map = :maps.to_list(map)
@@ -160,7 +160,7 @@ if Scribe.compile_auto_inspect?() do
         dunder ->
           if :maps.keys(dunder) == :maps.keys(struct) do
             pruned =
-              if Scribe.enabled?() do
+              if Scribe.auto_inspect?() do
                 :maps.remove(:__exception__, struct)
               else
                 :maps.remove(:__exception__, :maps.remove(:__struct__, struct))

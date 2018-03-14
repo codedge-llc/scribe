@@ -3,10 +3,6 @@ defmodule Scribe.InspectOverridesTest do
 
   use ExUnit.Case, async: false
 
-  def set_auto_inspect(enabled?) do
-    Application.put_env(:scribe, :auto_inspect, enabled?)
-  end
-
   def set_compile_auto_inspect(enabled?) do
     Application.put_env(:scribe, :compile_auto_inspect, enabled?)
   end
@@ -88,7 +84,7 @@ defmodule Scribe.InspectOverridesTest do
     assert inspect([t, t, t]) == expected
   end
 
-  test "Scribe.enabled? returns correct status for config options" do
+  test "Scribe.auto_inspect? returns correct status for config options" do
     # {:compile_auto_inspect, :auto_inspect, Scribe.enabled?()}
     [
       {true, true, true},
@@ -98,14 +94,14 @@ defmodule Scribe.InspectOverridesTest do
     ]
     |> Enum.each(fn {compile?, enable?, result} ->
       set_compile_auto_inspect(compile?)
-      set_auto_inspect(enable?)
-      assert Scribe.enabled?() == result
+      Scribe.auto_inspect(enable?)
+      assert Scribe.auto_inspect?() == result
     end)
 
     on_exit(fn -> set_config(true) end)
   end
 
-  test "formatting is used when Scribe.enabled?()" do
+  test "formatting is used when Scribe.auto_inspect?()" do
     set_config(false)
 
     t = %{test: 1234, key: "testing"}
