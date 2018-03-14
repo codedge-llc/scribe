@@ -20,12 +20,13 @@ Pretty-print tables of Elixir structs and maps. Inspired by [hirb](https://githu
 
 ## Usage
 
-Use `Scribe.print/1` to print a list of maps or structs as a table.
-Header columns are taken from the keys of the first element.
+Print a list of maps or structs as a table. Header columns are taken from the
+keys of the first element.
 
   ```elixir
-  iex(1)> [%{key: "value", another_key: 123},
-  ...(1)> %{key: "test", another_key: :key}] |> Scribe.print
+  iex(1)> data = [%{key: "value", another_key: 123},
+  ...(1)> %{key: "test", another_key: :key}]
+  iex(2)> Scribe.print(data)
   +----------------+-------------+
   | :another_key   | :key        |
   +----------------+-------------+
@@ -53,7 +54,7 @@ Useful for printing large collections, such as results of database queries
 
 ## Use Scribe Automatically
 
-Scribe can override `inspect/2` to automatically return maps in table format.
+Scribe can override `Inspect` to automatically return maps in table format.
 Add the following to your `config/dev.exs`:
 
   ```elixir
@@ -62,16 +63,15 @@ Add the following to your `config/dev.exs`:
     auto_inspect: true
   ```
 
-If needed, it can be temporarily disabled in the shell.
+Temporarily disable in the shell if needed:
 
   ```elixir
   iex(1)> Scribe.auto_inspect(false)
-  iex(2)> %{id: 1234, key: :value}
-  %{id: 1234, key: :value}
+  :ok
   ```
 
-*Note: Auto-inspect functionality will not work in production Distillery
-releases. Leave it out of your prod.exs*
+**Note: Auto-inspect will not work in production Distillery
+releases. Leave it out of your prod.exs**
 
 ## Pagination
 
@@ -172,7 +172,7 @@ Pass a `width` option to define table width.
 
 ### Styles
 
-Scribe supports three styling formats natively, with support for custom adapters.
+Scribe supports four styling formats natively, with support for custom adapters.
 
 *Default*
 
@@ -237,5 +237,5 @@ Scribe supports three styling formats natively, with support for custom adapters
 Set a default one in your Mix config if you like:
 
   ```elixir
-  config :scribe, style: Scribe.Style.Psql`
+  config :scribe, style: Scribe.Style.Psql
   ```
