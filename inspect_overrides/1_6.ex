@@ -1,7 +1,7 @@
-import Kernel, except: [inspect: 1]
-import Inspect.Algebra
-
 if Scribe.compile_auto_inspect?() do
+  import Kernel, except: [inspect: 1]
+  import Inspect.Algebra
+
   defimpl Inspect, for: List do
     alias Code.Identifier
 
