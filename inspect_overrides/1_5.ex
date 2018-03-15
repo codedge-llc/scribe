@@ -1,6 +1,6 @@
 if Scribe.compile_auto_inspect?() do
   import Kernel, except: [inspect: 1]
-  import Inspect.Algebra
+  import Inspect.Algebra, warn: false
 
   defimpl Inspect, for: List do
     def inspect([], opts) do
