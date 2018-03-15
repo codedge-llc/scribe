@@ -25,12 +25,20 @@ defmodule Scribe do
           width: integer
         ]
 
-  def enable do
-    Application.put_env(:scribe, :enable, true)
-  end
+  @doc ~S"""
+  Enables/disables auto-inspect override.
 
-  def disable do
-    Application.put_env(:scribe, :enable, false)
+  If true, Scribe will override `inspect/2` for maps and structs, printing
+  them as tables.
+
+  ## Examples
+
+      iex> Scribe.auto_inspect(true)
+      :ok
+  """
+  @spec auto_inspect(boolean) :: :ok
+  def auto_inspect(inspect?) do
+    Application.put_env(:scribe, :auto_inspect, inspect?)
   end
 
   @doc ~S"""
@@ -38,11 +46,17 @@ defmodule Scribe do
 
   ## Examples
 
-      iex> Scribe.enabled?
+      iex> Scribe.auto_inspect?
       true
   """
-  def enabled? do
-    Application.get_env(:scribe, :enable, true)
+  def auto_inspect? do
+    compile_auto_inspect?() and
+      Application.get_env(:scribe, :auto_inspect, false)
+  end
+
+  @doc false
+  def compile_auto_inspect? do
+    Application.get_env(:scribe, :compile_auto_inspect, false)
   end
 
   @doc ~S"""
@@ -63,6 +77,7 @@ defmodule Scribe do
   """
   @spec print(data, format_opts) :: :ok
   def print(_results, opts \\ [])
+
   def print([], _opts), do: :ok
 
   def print(results, opts) do
