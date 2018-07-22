@@ -167,7 +167,7 @@ Pass a `width` option to define table width.
 ### Disable Colors
 
   ```elixir
-  iex> Scribe.print(data, colorization: false)
+  iex> Scribe.print(data, colorize: false)
   ```
 
 ### Styles
