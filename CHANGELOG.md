@@ -1,3 +1,6 @@
+# v0.8.1
+* Support for Elixir `v1.7`
+
 # v0.8.0
 * `:compile_auto_inspect` and `:auto_inspect` config options, both default
   to false
