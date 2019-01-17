@@ -4,7 +4,7 @@ defmodule Scribe.Mixfile do
   def project do
     [
       app: :scribe,
-      version: "0.8.1",
+      version: "0.8.2",
       elixir: "~> 1.5",
       source_url: "https://github.com/codedge-llc/scribe",
       description: description(),
@@ -47,7 +47,7 @@ defmodule Scribe.Mixfile do
       {:faker, "~> 0.9", only: [:dev, :test]},
       {:excoveralls, "~> 0.8", only: :test},
       {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
-      {:credo, "~> 0.8", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.0", only: [:dev, :test], runtime: false}
     ]
   end
 

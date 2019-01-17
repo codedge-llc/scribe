@@ -1,3 +1,6 @@
+# v0.8.2
+* Support for Elixir `v1.8`
+
 # v0.8.1
 * Support for Elixir `v1.7`
 
