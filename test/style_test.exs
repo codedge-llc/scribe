@@ -87,4 +87,23 @@ defmodule Scribe.StyleTest do
       assert actual == expected
     end
   end
+
+  describe "no_border" do
+    test "outputs correct format" do
+      t = %Scribe.StyleTest{}
+      refute t.id
+      assert t.value == 1234
+
+      # Whitespace stripping breaks docstrings
+      expected =
+        " :__struct__         :id    :value   \n" <>
+          " Scribe.StyleTest    nil    1234     \n" <>
+          " Scribe.StyleTest    nil    1234     \n" <>
+          " Scribe.StyleTest    nil    1234     \n"
+
+      opts = [colorize: false, style: Scribe.Style.NoBorder]
+      actual = Scribe.format([t, t, t], opts)
+      assert actual == expected
+    end
+  end
 end

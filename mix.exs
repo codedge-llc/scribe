@@ -1,10 +1,12 @@
 defmodule Scribe.Mixfile do
   use Mix.Project
 
+  @version "0.9.0"
+
   def project do
     [
       app: :scribe,
-      version: "0.8.2",
+      version: @version,
       elixir: "~> 1.5",
       source_url: "https://github.com/codedge-llc/scribe",
       description: description(),

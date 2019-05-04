@@ -13,7 +13,7 @@ Pretty-print tables of Elixir structs and maps. Inspired by [hirb](https://githu
   ```elixir
   def deps do
     [
-      {:scribe, "~> 0.8"}
+      {:scribe, "~> 0.9"}
     ]
   end
   ```
@@ -232,6 +232,19 @@ Scribe supports four styling formats natively, with support for custom adapters.
   │ 484   │ "2017-03-27 14:42:34.097572Z"     │ "9194A82EF4BB0123"     │
   │ 780   │ "2017-03-27 14:42:34.097591Z"     │ "BF92748B4AAAF14A"     │
   └───────┴───────────────────────────────────┴────────────────────────┘
+  ```
+
+*NoBorder*
+
+  ```elixir
+  iex> Scribe.print(data, style: Scribe.Style.NoBorder)
+
+   :id    :inserted_at                       :key                   
+   457    "2017-03-27 14:42:34.095202Z"      "CEB0E055ECDF6028"     
+   326    "2017-03-27 14:42:34.097519Z"      "CF67027F7235B88D"     
+   756    "2017-03-27 14:42:34.097553Z"      "DE016DFF477BEDDB"     
+   484    "2017-03-27 14:42:34.097572Z"      "9194A82EF4BB0123"     
+   780    "2017-03-27 14:42:34.097591Z"      "BF92748B4AAAF14A"     
   ```
 
 Set a default one in your Mix config if you like:
