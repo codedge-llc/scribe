@@ -15,6 +15,7 @@ defmodule Scribe do
 
   - `:colorize` - When `false`, disables colored output. Defaults to `true`
   - `:data` - Defines table headers
+  - `:device` - Where to print (defaults to STDOUT)
   - `:style` - Style callback module. Defaults to `Scribe.Style.Default`
   - `:width` - Defines table width. Defaults to `:infinite`
   """
@@ -81,9 +82,9 @@ defmodule Scribe do
   def print([], _opts), do: :ok
 
   def print(results, opts) do
-    results
-    |> format(opts)
-    |> IO.puts()
+    dev = opts |> Keyword.get(:device, :stdio)
+    results = results |> format(opts)
+    dev |> IO.puts(results)
   end
 
   def console(results, opts \\ []) do
