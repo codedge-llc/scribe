@@ -13,7 +13,7 @@ Pretty-print tables of Elixir structs and maps. Inspired by [hirb](https://githu
   ```elixir
   def deps do
     [
-      {:scribe, "~> 0.9"}
+      {:scribe, "~> 0.10"}
     ]
   end
   ```

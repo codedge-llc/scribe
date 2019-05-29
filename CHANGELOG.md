@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.10.0
+* Added `:device` option to `Scribe.print/2` for printing to a specific device.
+  Defaults to `:stdio`
+
 ## v0.9.0
 * `NoBorder` style added.
 
