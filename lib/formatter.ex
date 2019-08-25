@@ -58,7 +58,10 @@ defmodule Scribe.Formatter.Line do
     case alignment do
       :center ->
         padding = String.duplicate(" ", div(width - len, 2))
-        truncate(" #{padding}#{inspect(x)}#{padding}", width - 2) <> " "
+        remaining = String.duplicate(" ", rem(width - len, 2))
+
+        truncate(" #{padding}#{inspect(x)}#{padding}#{remaining}", width - 2) <>
+          " "
 
       :right ->
         padding = String.duplicate(" ", width - len)
