@@ -25,7 +25,7 @@ keys of the first element.
 
   ```elixir
   iex(1)> data = [%{key: "value", another_key: 123},
-  ...(1)> %{key: "test", another_key: :key}]
+  ...(1)> [%{key: "test", another_key: :key}]
   iex(2)> Scribe.print(data)
   +----------------+-------------+
   | :another_key   | :key        |
@@ -130,7 +130,7 @@ You can specify functions that take the given row's struct or map as its only ar
     User
     |> limit(5)
     |> Repo.all
-    |> Scribe.print(u, [{"ID", :id}, {"Full Name", fn(x) -> "#{x.last_name}, #{x.first_name}" end}])
+    |> Scribe.print(data: [{"ID", :id}, {"Full Name", fn(x) -> "#{x.last_name}, #{x.first_name}" end}])
 
   +--------------------------+----------------------------------------------+
   | "ID"                     | "Full Name"                                  |
