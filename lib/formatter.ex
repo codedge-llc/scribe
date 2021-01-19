@@ -37,8 +37,13 @@ defmodule Scribe.Formatter.Line do
 
         cell_value =
           case opts[:colorize] do
-            false -> value |> cell(width)
-            _ -> value |> cell(width) |> colorize(style.color(value))
+            false ->
+              value |> cell(width, opts[:alignment])
+
+            _ ->
+              value
+              |> cell(width, opts[:alignment])
+              |> colorize(style.color(value))
           end
 
         acc <> cell_value <> b.right_edge
@@ -47,10 +52,25 @@ defmodule Scribe.Formatter.Line do
     left_edge <> line <> "\n"
   end
 
-  def cell(x, width) do
+  def cell(x, width, alignment \\ :left) do
     len = min(String.length(" #{inspect(x)} "), width)
-    padding = String.duplicate(" ", width - len)
-    truncate(" #{inspect(x)}#{padding}", width - 2) <> " "
+
+    case alignment do
+      :center ->
+        padding = String.duplicate(" ", div(width - len, 2))
+        remaining = String.duplicate(" ", rem(width - len, 2))
+
+        truncate(" #{padding}#{inspect(x)}#{padding}#{remaining}", width - 2) <>
+          " "
+
+      :right ->
+        padding = String.duplicate(" ", width - len)
+        truncate(" #{padding}#{inspect(x)}", width - 2) <> " "
+
+      _ ->
+        padding = String.duplicate(" ", width - len)
+        truncate(" #{inspect(x)}#{padding}", width - 2) <> " "
+    end
   end
 
   def cell_value(x, padding, max_width) when padding >= 0 do
