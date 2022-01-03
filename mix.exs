@@ -43,13 +43,12 @@ defmodule Scribe.Mixfile do
 
   defp deps do
     [
-      {:pane, "~> 0.2"},
-      {:ex_doc, ">= 0.0.0", only: :dev},
-      {:dogma, ">= 0.0.0", only: :dev},
-      {:faker, "~> 0.9", only: [:dev, :test]},
-      {:excoveralls, "~> 0.8", only: :test},
+      {:credo, "~> 1.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-      {:credo, "~> 1.0", only: [:dev, :test], runtime: false}
+      {:excoveralls, "~> 0.8", only: :test},
+      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:faker, "~> 0.9", only: [:dev, :test]},
+      {:pane, "~> 0.2"}
     ]
   end
 
