@@ -1,0 +1,15 @@
+version: 2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/elixir:1.12
+
+    working_directory: ~/app
+    steps:
+      - checkout
+
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+
+      - run: mix test

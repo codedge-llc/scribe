@@ -48,7 +48,7 @@ defmodule Scribe.Mixfile do
       {:dogma, ">= 0.0.0", only: :dev},
       {:faker, "~> 0.9", only: [:dev, :test]},
       {:excoveralls, "~> 0.8", only: :test},
-      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:credo, "~> 1.0", only: [:dev, :test], runtime: false}
     ]
   end
