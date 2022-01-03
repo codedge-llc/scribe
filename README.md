@@ -52,27 +52,6 @@ iex(1)> User |> limit(5) |> Repo.all |> Scribe.print
 +-------------+----------------------------+------+
 ```
 
-## Use Scribe Automatically
-
-Scribe can override `Inspect` to automatically return maps in table format.
-Add the following to your `config/dev.exs`:
-
-```elixir
-config :scribe,
-  compile_auto_inspect: true,
-  auto_inspect: true
-```
-
-Temporarily disable in the shell if needed:
-
-```elixir
-iex(1)> Scribe.auto_inspect(false)
-:ok
-```
-
-**Note: Auto-inspect will not work in production Distillery
-releases. Leave it out of your prod.exs**
-
 ## Pagination
 
 Scribe uses [pane](https://github.com/codedge-llc/pane) to paginate large tables.
