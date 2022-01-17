@@ -13,6 +13,7 @@ defmodule Scribe do
   @typedoc ~S"""
   Options for configuring table output.
 
+  - `:alignment` - Define text alignment in cells. Defaults to `:left`.
   - `:colorize` - When `false`, disables colored output. Defaults to `true`
   - `:data` - Defines table headers
   - `:device` - Where to print (defaults to STDOUT)
@@ -20,6 +21,7 @@ defmodule Scribe do
   - `:width` - Defines table width. Defaults to `:infinite`
   """
   @type format_opts :: [
+          alignment: atom,
           colorize: boolean,
           data: [...],
           style: module,
