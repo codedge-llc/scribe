@@ -73,6 +73,20 @@ defmodule Scribe.ScribeTest do
       actual = Scribe.format([t], colorize: false)
       assert actual == expected
     end
+    test "keyword as data source" do
+      t = [key: "testing", test: 1234]
+
+      expected = """
+      +---------------+---------+
+      | :key          | :test   |
+      +---------------+---------+
+      | "testing"     | 1234    |
+      +---------------+---------+
+      """
+
+      actual = Scribe.format([t], colorize: false)
+      assert actual == expected
+    end
 
     test "displays only specified keys" do
       t = %{test: 1234, key: "testing"}
