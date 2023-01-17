@@ -88,6 +88,47 @@ defmodule Scribe.StyleTest do
     end
   end
 
+  describe "double" do
+    test "outputs correct format" do
+      t = %Scribe.StyleTest{}
+      refute t.id
+      assert t.value == 1234
+
+      # Whitespace stripping breaks docstrings
+      expected =
+        "╔════════════════════╦═══════╦══════════╗\n" <>
+          "║ :__struct__        ║ :id   ║ :value   ║\n" <>
+          "╠════════════════════╬═══════╬══════════╣\n" <>
+          "║ Scribe.StyleTest   ║ nil   ║ 1234     ║\n" <>
+          "║ Scribe.StyleTest   ║ nil   ║ 1234     ║\n" <>
+          "║ Scribe.StyleTest   ║ nil   ║ 1234     ║\n" <>
+          "╚════════════════════╩═══════╩══════════╝\n"
+
+      opts = [colorize: false, style: Scribe.Style.Double]
+      actual = Scribe.format([t, t, t], opts)
+      assert actual == expected
+    end
+  end
+
+  describe "html" do
+    test "outputs correct format" do
+      t = %Scribe.StyleTest{}
+      refute t.id
+      assert t.value == 1234
+
+      # Whitespace stripping breaks docstrings
+      expected =
+        "<table><tr><th> :__struct__        </th><th> :id   </th><th> :value   </th></tr>\n" <>
+          "<tr><td> Scribe.StyleTest   </td><td> nil   </td><td> 1234     </td></tr>\n" <>
+          "<tr><td> Scribe.StyleTest   </td><td> nil   </td><td> 1234     </td></tr>\n" <>
+          "<tr><td> Scribe.StyleTest   </td><td> nil   </td><td> 1234     \n</td></tr></table>\n"
+
+      opts = [colorize: false, style: Scribe.Style.Html]
+      actual = Scribe.format([t, t, t], opts)
+      assert actual == expected
+    end
+  end
+
   describe "no_border" do
     test "outputs correct format" do
       t = %Scribe.StyleTest{}
