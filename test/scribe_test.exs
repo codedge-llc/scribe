@@ -8,8 +8,6 @@ defmodule Scribe.ScribeTest do
   describe "format/2" do
     test "includes __struct__ attributes" do
       t = %Scribe.ScribeTest{}
-      refute t.id
-      assert t.value == 1234
 
       expected = """
       +---------------------+-------+----------+
@@ -25,8 +23,6 @@ defmodule Scribe.ScribeTest do
 
     test "accepts single element as data" do
       t = %Scribe.ScribeTest{}
-      refute t.id
-      assert t.value == 1234
 
       expected = """
       +---------------------+-------+----------+
@@ -42,8 +38,6 @@ defmodule Scribe.ScribeTest do
 
     test "formats multiple rows of data" do
       t = %Scribe.ScribeTest{}
-      refute t.id
-      assert t.value == 1234
 
       expected = """
       +---------------------+-------+----------+
@@ -73,6 +67,7 @@ defmodule Scribe.ScribeTest do
       actual = Scribe.format([t], colorize: false)
       assert actual == expected
     end
+
     test "keyword as data source" do
       t = [key: "testing", test: 1234]
 

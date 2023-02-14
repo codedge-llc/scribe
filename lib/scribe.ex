@@ -150,15 +150,24 @@ defmodule Scribe do
   defp map_string_values(row, keys), do: Enum.map(keys, &string_value(row, &1))
 
   defp string_value(%{name: name, key: _key}), do: name
-  defp string_value(map, %{name: _name, key: key}) when is_function(key), do: key.(map)
-  defp string_value(map, %{name: _name, key: key}) when is_map(map), do: Map.get(map, key)
-  defp string_value(list, %{name: _name, key: key}) when is_list(list), do: Keyword.get(list, key)
+
+  defp string_value(map, %{name: _name, key: key}) when is_function(key),
+    do: key.(map)
+
+  defp string_value(map, %{name: _name, key: key}) when is_map(map),
+    do: Map.get(map, key)
+
+  defp string_value(list, %{name: _name, key: key}) when is_list(list),
+    do: Keyword.get(list, key)
 
   defp fetch_keys([first | _rest], nil), do: fetch_keys(first)
   defp fetch_keys(_list, opts), do: process_headers(opts)
 
-  defp fetch_keys(list) when is_list(list), do: list |> Keyword.keys() |> process_headers()
-  defp fetch_keys(map) when is_map(map), do: map |> Map.keys() |> process_headers()
+  defp fetch_keys(list) when is_list(list),
+    do: list |> Keyword.keys() |> process_headers()
+
+  defp fetch_keys(map) when is_map(map),
+    do: map |> Map.keys() |> process_headers()
 
   defp process_headers(opts) do
     for opt <- opts do

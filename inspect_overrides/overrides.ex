@@ -28,32 +28,8 @@ if Scribe.compile_auto_inspect?() do
     def do_inspect(term, opts) do
       %Inspect.Opts{
         charlists: lists,
-        char_lists: lists_deprecated,
         printable_limit: printable_limit
       } = opts
-
-      lists =
-        if lists == :infer and lists_deprecated != :infer do
-          case lists_deprecated do
-            :as_char_lists ->
-              IO.warn(
-                "the :char_lists inspect option and its :as_char_lists " <>
-                  "value are deprecated, use the :charlists option and its " <>
-                  ":as_charlists value instead"
-              )
-
-              :as_charlists
-
-            _ ->
-              IO.warn(
-                "the :char_lists inspect option is deprecated, use :charlists instead"
-              )
-
-              lists_deprecated
-          end
-        else
-          lists
-        end
 
       open = color("[", :list, opts)
       sep = color(",", :list, opts)
@@ -92,7 +68,7 @@ if Scribe.compile_auto_inspect?() do
 
     @doc false
     def keyword({key, value}, opts) do
-      key = color(Identifier.inspect_as_key(key), :atom, opts)
+      key = color(Macro.inspect_atom(:key, key), :atom, opts)
       concat(key, concat(" ", to_doc(value, opts)))
     end
 
@@ -151,32 +127,21 @@ if Scribe.compile_auto_inspect?() do
   end
 
   defimpl Inspect, for: Any do
-    def inspect(%module{} = struct, opts) do
-      try do
-        module.__struct__
-      rescue
-        _ -> Inspect.Map.inspect(struct, opts)
-      else
-        dunder ->
-          if :maps.keys(dunder) == :maps.keys(struct) do
-            pruned =
-              if Scribe.auto_inspect?() do
-                :maps.remove(:__exception__, struct)
-              else
-                :maps.remove(:__exception__, :maps.remove(:__struct__, struct))
-              end
+    def inspect(struct, opts) when is_struct(struct) do
+      pruned =
+        if Scribe.auto_inspect?() do
+          Map.drop(struct, [:__exception__])
+        else
+          Map.drop(struct, [:__exception__, :__struct__])
+        end
 
-            colorless_opts = %{opts | syntax_colors: []}
+      colorless_opts = %{opts | syntax_colors: []}
 
-            Inspect.Map.inspect(
-              pruned,
-              Inspect.Atom.inspect(module, colorless_opts),
-              opts
-            )
-          else
-            Inspect.Map.inspect(struct, opts)
-          end
-      end
+      Inspect.Map.inspect(pruned, colorless_opts)
+    end
+
+    def inspect(map, opts)  do
+      Inspect.Map.inspect(map, opts)
     end
   end
 end

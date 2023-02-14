@@ -1,8 +1,6 @@
 defmodule Scribe.Style.Html do
   @moduledoc false
 
-  alias Scribe.Border
-
   @behaviour Scribe.Style
 
   def border_at(0, col, _max_rows, max_cols) when col == max_cols - 1 do

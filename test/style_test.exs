@@ -5,10 +5,7 @@ defmodule Scribe.StyleTest do
   describe "default" do
     test "outputs correct format" do
       t = %Scribe.StyleTest{}
-      refute t.id
-      assert t.value == 1234
 
-      # Whitespace stripping breaks docstrings
       expected = """
       +--------------------+-------+----------+
       | :__struct__        | :id   | :value   |
@@ -28,10 +25,7 @@ defmodule Scribe.StyleTest do
   describe "psql" do
     test "outputs correct format" do
       t = %Scribe.StyleTest{}
-      refute t.id
-      assert t.value == 1234
 
-      # Whitespace stripping breaks docstrings
       expected = """
                                              
        :__struct__        | :id   | :value   
@@ -50,10 +44,7 @@ defmodule Scribe.StyleTest do
   describe "github_markdown" do
     test "outputs correct format" do
       t = %Scribe.StyleTest{}
-      refute t.id
-      assert t.value == 1234
 
-      # Whitespace stripping breaks docstrings
       expected = """
                                                
       | :__struct__        | :id   | :value   |
@@ -72,10 +63,7 @@ defmodule Scribe.StyleTest do
   describe "pseudo" do
     test "outputs correct format" do
       t = %Scribe.StyleTest{}
-      refute t.id
-      assert t.value == 1234
 
-      # Whitespace stripping breaks docstrings
       expected = """
       ┌────────────────────┬───────┬──────────┐
       │ :__struct__        │ :id   │ :value   │
@@ -95,10 +83,7 @@ defmodule Scribe.StyleTest do
   describe "double" do
     test "outputs correct format" do
       t = %Scribe.StyleTest{}
-      refute t.id
-      assert t.value == 1234
 
-      # Whitespace stripping breaks docstrings
       expected = """
       ╔════════════════════╦═══════╦══════════╗
       ║ :__struct__        ║ :id   ║ :value   ║
@@ -118,8 +103,6 @@ defmodule Scribe.StyleTest do
   describe "fancy" do
     test "outputs correct format" do
       t = %Scribe.StyleTest{}
-      refute t.id
-      assert t.value == 1234
 
       expected = """
       ╒════════════════════╤═══════╤══════════╕
@@ -141,10 +124,7 @@ defmodule Scribe.StyleTest do
   describe "html" do
     test "outputs correct format" do
       t = %Scribe.StyleTest{}
-      refute t.id
-      assert t.value == 1234
 
-      # Whitespace stripping breaks docstrings
       expected = """
       <table><tr><th> :__struct__        </th><th> :id   </th><th> :value   </th></tr>
       <tr><td> Scribe.StyleTest   </td><td> nil   </td><td> 1234     </td></tr>
@@ -162,10 +142,7 @@ defmodule Scribe.StyleTest do
   describe "no_border" do
     test "outputs correct format" do
       t = %Scribe.StyleTest{}
-      refute t.id
-      assert t.value == 1234
 
-      # Whitespace stripping breaks docstrings
       expected = """
        :__struct__         :id    :value   
        Scribe.StyleTest    nil    1234     
