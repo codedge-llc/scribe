@@ -1,5 +1,21 @@
 defmodule Scribe.Style.Default do
-  @moduledoc false
+  @moduledoc """
+  default style
+
+  ## example
+  iex>  t = %Scribe.StyleTest{}
+  iex>  opts = [colorize: false, style: Scribe.Style.Default]
+  iex>  Scribe.format([t, t, t], opts)
+  "\""
+  +--------------------+-------+----------+
+  | :__struct__        | :id   | :value   |
+  +--------------------+-------+----------+
+  | Scribe.StyleTest   | nil   | 1234     |
+  | Scribe.StyleTest   | nil   | 1234     |
+  | Scribe.StyleTest   | nil   | 1234     |
+  +--------------------+-------+----------+
+  "\""
+  """
 
   alias Scribe.Border
 

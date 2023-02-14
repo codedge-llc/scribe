@@ -1,6 +1,19 @@
 defmodule Scribe.Style.Html do
-  @moduledoc false
+  @moduledoc """
+  html style
 
+  ## example
+  iex>  t = %Scribe.StyleTest{}
+  iex>  opts = [colorize: false, style: Scribe.Style.Html]
+  iex>  Scribe.format([t, t, t], opts)
+  "\""
+  <table><tr><th> :__struct__        </th><th> :id   </th><th> :value   </th></tr>
+  <tr><td> Scribe.StyleTest   </td><td> nil   </td><td> 1234     </td></tr>
+  <tr><td> Scribe.StyleTest   </td><td> nil   </td><td> 1234     </td></tr>
+  <tr><td> Scribe.StyleTest   </td><td> nil   </td><td> 1234     
+  </td></tr></table>
+  "\""
+  """
   @behaviour Scribe.Style
 
   def border_at(0, col, _max_rows, max_cols) when col == max_cols - 1 do

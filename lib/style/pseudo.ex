@@ -1,5 +1,21 @@
 defmodule Scribe.Style.Pseudo do
-  @moduledoc false
+  @moduledoc """
+  pseudo style
+
+  ## example
+  iex>  t = %Scribe.StyleTest{}
+  iex>  opts = [colorize: false, style: Scribe.Style.Pseudo]
+  iex>  Scribe.format([t, t, t], opts)
+  "\""
+  ┌────────────────────┬───────┬──────────┐
+  │ :__struct__        │ :id   │ :value   │
+  ├────────────────────┼───────┼──────────┤
+  │ Scribe.StyleTest   │ nil   │ 1234     │
+  │ Scribe.StyleTest   │ nil   │ 1234     │
+  │ Scribe.StyleTest   │ nil   │ 1234     │
+  └────────────────────┴───────┴──────────┘
+  "\""
+  """
 
   @behaviour Scribe.Style
 

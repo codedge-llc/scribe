@@ -1,6 +1,6 @@
 defmodule Scribe do
   @moduledoc """
-  Pretty-print tables of structs and maps
+  Pretty-print tables of structs, maps and lists
   """
 
   alias Scribe.Table

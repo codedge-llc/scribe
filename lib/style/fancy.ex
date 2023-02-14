@@ -1,5 +1,21 @@
 defmodule Scribe.Style.Fancy do
-  @moduledoc false
+  @moduledoc """
+  fancy style
+
+  ## example
+  iex>  t = %Scribe.StyleTest{}
+  iex>  opts = [colorize: false, style: Scribe.Style.Fancy]
+  iex>  Scribe.format([t, t, t], opts)
+  "\""
+  ╒════════════════════╤═══════╤══════════╕
+  │ :__struct__        │ :id   │ :value   │
+  ╞════════════════════╪═══════╪══════════╡
+  │ Scribe.StyleTest   │ nil   │ 1234     │
+  │ Scribe.StyleTest   │ nil   │ 1234     │
+  │ Scribe.StyleTest   │ nil   │ 1234     │
+  ╘════════════════════╧═══════╧══════════╛
+  "\""
+  """
 
   @behaviour Scribe.Style
 

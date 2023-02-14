@@ -1,6 +1,18 @@
 defmodule Scribe.Style.NoBorder do
-  @moduledoc false
+  @moduledoc """
+  no border style
 
+  ## example
+  iex>  t = %Scribe.StyleTest{}
+  iex>  opts = [colorize: false, style: Scribe.Style.NoBorder]
+  iex>  Scribe.format([t, t, t], opts)
+  "\""
+   :__struct__         :id    :value   
+   Scribe.StyleTest    nil    1234     
+   Scribe.StyleTest    nil    1234     
+   Scribe.StyleTest    nil    1234     
+  "\""
+  """
   alias Scribe.Border
 
   @behaviour Scribe.Style
