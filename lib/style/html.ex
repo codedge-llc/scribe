@@ -7,7 +7,8 @@ defmodule Scribe.Style.Html do
   iex>  opts = [colorize: false, style: Scribe.Style.Html]
   iex>  Scribe.format([t, t, t], opts)
   "\""
-  <table><tr><th> :__struct__        </th><th> :id   </th><th> :value   </th></tr>
+  <table>
+  <tr><th> :__struct__        </th><th> :id   </th><th> :value   </th></tr>
   <tr><td> Scribe.StyleTest   </td><td> nil   </td><td> 1234     </td></tr>
   <tr><td> Scribe.StyleTest   </td><td> nil   </td><td> 1234     </td></tr>
   <tr><td> Scribe.StyleTest   </td><td> nil   </td><td> 1234     
@@ -25,7 +26,7 @@ defmodule Scribe.Style.Html do
 
   def border_at(0, _columns, _max_rows, _max_cols) do
     %Scribe.Border{
-      top_left_corner: "<table><tr>",
+      top_left_corner: "<table>\n<tr>",
       right_edge: "</th><th>",
       bottom_left_corner: "<tr>",
       left_edge: "<th>"
