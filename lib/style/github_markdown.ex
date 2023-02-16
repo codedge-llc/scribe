@@ -7,7 +7,6 @@ defmodule Scribe.Style.GithubMarkdown do
   iex>  opts = [colorize: false, style: Scribe.Style.GithubMarkdown]
   iex>  Scribe.format([t, t, t], opts)
   "\""
-                                           
   | :__struct__        | :id   | :value   |
   |--------------------|-------|----------|
   | Scribe.StyleTest   | nil   | 1234     |
@@ -26,9 +25,9 @@ defmodule Scribe.Style.GithubMarkdown do
       bottom_edge: "-",
       bottom_left_corner: "|",
       bottom_right_corner: "|",
-      top_edge: " ",
-      top_left_corner: " ",
-      top_right_corner: " ",
+      top_edge: "",
+      top_left_corner: "",
+      top_right_corner: "",
       left_edge: "|",
       right_edge: "|"
     }

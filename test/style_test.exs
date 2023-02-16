@@ -4,6 +4,7 @@ defmodule Scribe.StyleTest do
   doctest Scribe.Style.Default
   doctest Scribe.Style.Double
   doctest Scribe.Style.Fancy
+  doctest Scribe.Style.Full
   doctest Scribe.Style.Html
   doctest Scribe.Style.NoBorder
   doctest Scribe.Style.Pseudo
@@ -35,7 +36,6 @@ defmodule Scribe.StyleTest do
       t = %Scribe.StyleTest{}
 
       expected = """
-                                             
        :__struct__        | :id   | :value   
       --------------------+-------+----------
        Scribe.StyleTest   | nil   | 1234     
@@ -54,7 +54,6 @@ defmodule Scribe.StyleTest do
       t = %Scribe.StyleTest{}
 
       expected = """
-                                               
       | :__struct__        | :id   | :value   |
       |--------------------|-------|----------|
       | Scribe.StyleTest   | nil   | 1234     |

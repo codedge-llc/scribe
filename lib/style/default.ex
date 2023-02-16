@@ -17,24 +17,28 @@ defmodule Scribe.Style.Default do
   "\""
   """
 
-  alias Scribe.Border
-
   @behaviour Scribe.Style
-
-  def border_at(0, _columns, _max_rows, _max_cols) do
-    Border.new("+", "|", "-")
-  end
-
-  def border_at(row, _col, max_rows, _max_cols) when row == max_rows - 1 do
-    Border.new("+", "|", "-")
-  end
-
-  def border_at(_row, _col, _max_rows, _max_cols) do
-    %Border{
-      left_edge: "|",
-      right_edge: "|"
-    }
-  end
-
   use Scribe.DefaultColors
+
+  use Scribe.DefaultTable,
+    a1: "+",
+    a2: "-",
+    a3: "+",
+    a4: "+",
+    b1: "|",
+    b2: " ",
+    b3: "|",
+    b4: "|",
+    c1: "+",
+    c2: "-",
+    c3: "+",
+    c4: "+",
+    d1: "|",
+    d2: " ",
+    d3: "|",
+    d4: "|",
+    e1: "+",
+    e2: "-",
+    e3: "+",
+    e4: "+"
 end
