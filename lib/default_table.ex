@@ -31,18 +31,18 @@ defmodule Scribe.DefaultTable do
       e4: "╝"
     """
 
-  defmacro __using__(table) do
+  defmacro __using__(edges) do
 
     quote do
       @header_border %Scribe.Border{
-        bottom_edge: unquote(table[:e2]),
-        bottom_left_corner: unquote(table[:e1]),
-        bottom_right_corner: unquote(table[:e4]),
-        top_edge: unquote(table[:a2]),
-        top_left_corner: unquote(table[:a1]),
-        top_right_corner: unquote(table[:a4]),
-        left_edge: unquote(table[:b1]),
-        right_edge: unquote(table[:b4])
+        bottom_edge: unquote(edges[:e2]),
+        bottom_left_corner: unquote(edges[:e1]),
+        bottom_right_corner: unquote(edges[:e4]),
+        top_edge: unquote(edges[:a2]),
+        top_left_corner: unquote(edges[:a1]),
+        top_right_corner: unquote(edges[:a4]),
+        left_edge: unquote(edges[:b1]),
+        right_edge: unquote(edges[:b4])
       }
       @empty_border %Scribe.Border{
         bottom_edge: "",
@@ -51,24 +51,24 @@ defmodule Scribe.DefaultTable do
         top_edge: "",
         top_left_corner: "",
         top_right_corner: "",
-        left_edge: unquote(table[:d1]),
-        right_edge: unquote(table[:d4])
+        left_edge: unquote(edges[:d1]),
+        right_edge: unquote(edges[:d4])
       }
 
       def border_at(0, col, _max_rows, max_cols) when col < max_cols - 1 do
         %Scribe.Border{
           @header_border
-          | bottom_left_corner: unquote(table[:c1]),
-            bottom_right_corner: unquote(table[:c3]),
-            top_right_corner: unquote(table[:a3])
+          | bottom_left_corner: unquote(edges[:c1]),
+            bottom_right_corner: unquote(edges[:c3]),
+            top_right_corner: unquote(edges[:a3])
         }
       end
 
       def border_at(0, _col, _max_rows, _max_cols) do
         %Scribe.Border{
           @header_border
-          | bottom_left_corner: unquote(table[:c1]),
-            bottom_right_corner: unquote(table[:c4])
+          | bottom_left_corner: unquote(edges[:c1]),
+            bottom_right_corner: unquote(edges[:c4])
         }
       end
 
@@ -78,7 +78,7 @@ defmodule Scribe.DefaultTable do
           @header_border
           | top_left_corner: "",
             top_right_corner: "",
-            bottom_right_corner: unquote(table[:e3])
+            bottom_right_corner: unquote(edges[:e3])
         }
       end
 

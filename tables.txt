@@ -1,0 +1,291 @@
+# svg vertical
+<?xml version='1.0' standalone='no'?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN'
+  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+<svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
+
+   <title>SVG Tables</title>
+
+   <g id='columnGroup'>
+      <rect x='65' y='10' width='75' height='110' fill='gainsboro'/>
+      <rect x='265' y='10' width='75' height='110' fill='gainsboro'/>
+
+      <text x='30' y='30' font-size='18px' font-weight='bold' fill='crimson'>
+         <tspan x='30' dy='1.5em'>Q1</tspan>
+         <tspan x='30' dy='1em'>Q2</tspan>
+         <tspan x='30' dy='1em'>Q3</tspan>
+         <tspan x='30' dy='1em'>Q4</tspan>
+      </text>
+
+      <text x='100' y='30' font-size='18px' text-anchor='middle'>
+         <tspan x='100' font-weight='bold' fill='crimson'>Sales</tspan>
+         <tspan x='100' dy='1.5em'>$ 223</tspan>
+         <tspan x='100' dy='1em'>$ 183</tspan>
+         <tspan x='100' dy='1em'>$ 277</tspan>
+         <tspan x='100' dy='1em'>$ 402</tspan>
+      </text>
+
+      <text x='200' y='30' font-size='18px' text-anchor='middle'>
+         <tspan x='200' font-weight='bold' fill='crimson'>Expenses</tspan>
+         <tspan x='200' dy='1.5em'>$ 195</tspan>
+         <tspan x='200' dy='1em'>$ 70</tspan>
+         <tspan x='200' dy='1em'>$ 88</tspan>
+         <tspan x='200' dy='1em'>$ 133</tspan>
+      </text>
+
+      <text x='300' y='30' font-size='18px' text-anchor='middle'>
+         <tspan x='300' font-weight='bold' fill='crimson'>Net</tspan>
+         <tspan x='300' dy='1.5em'>$ 28</tspan>
+         <tspan x='300' dy='1em'>$ 113</tspan>
+         <tspan x='300' dy='1em'>$ 189</tspan>
+         <tspan x='300' dy='1em'>$ 269</tspan>
+      </text>
+   </g>
+</svg>
+
+# svg vertical
+<?xml version='1.0' standalone='no'?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN'
+  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+<svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>
+   <g id='rowGroup' transform='translate(0, 150)'>
+      <rect x='25' y='40' width='310' height='20' fill='gainsboro'/>
+      <rect x='25' y='76' width='310' height='20' fill='gainsboro'/>
+
+      <text x='30' y='30' font-size='18px' font-weight='bold' fill='crimson' text-anchor='middle'>
+         <tspan x='100'>Sales</tspan>
+         <tspan x='200'>Expenses</tspan>
+         <tspan x='300'>Net</tspan>
+      </text>
+
+      <text x='30' y='30' font-size='18px' text-anchor='middle'>
+         <tspan x='30' dy='1.5em' font-weight='bold' fill='crimson' text-anchor='start'>Q1</tspan>
+         <tspan x='100'>$ 223</tspan>
+         <tspan x='200'>$ 195</tspan>
+         <tspan x='300'>$ 28</tspan>
+      </text>
+
+      <text x='30' y='30' font-size='18px' text-anchor='middle'>
+         <tspan x='30' dy='2.5em' font-weight='bold' fill='crimson' text-anchor='start'>Q2</tspan>
+         <tspan x='100'>$ 183</tspan>
+         <tspan x='200'>$ 70</tspan>
+         <tspan x='300'>$ 113</tspan>
+      </text>
+   </g>
+</svg>
+
+# html
+<table>
+  <thead>
+    <tr><th>id</th><th>feed_language</th><th>etag</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>2</td><td>pl-PL</td><td>W/&quot;b3f32cfa11d5f140d28c246bf6029f3b&quot;</td></tr>
+    <tr><td>3</td><td>pl-PL</td><td>&quot;644bbd11692e2fb0e08be6fc1773cbe6&quot;</td></tr>
+    <tr><td>4</td><td>en-US</td><td></td></tr>
+  </tbody>
+</table>
+
+rss_reader_dev> \T mediawiki
+{| class="wikitable" style="text-align: left;"
+|+ <!-- caption -->
+|-
+! id !! feed_language !! etag
+|-
+| 2 || pl-PL || W/"b3f32cfa11d5f140d28c246bf6029f3b"
+|-
+| 3 || pl-PL || "644bbd11692e2fb0e08be6fc1773cbe6"
+|-
+| 4 || en-US ||
+|}
+
+# tsv
+id      feed_language   etag
+2       pl-PL   W/"b3f32cfa11d5f140d28c246bf6029f3b"
+3       pl-PL   "644bbd11692e2fb0e08be6fc1773cbe6"
+4       en-US
+
+#csv
+"id","feed_language","etag"
+"2","pl-PL","W/""b3f32cfa11d5f140d28c246bf6029f3b"""
+"3","pl-PL","""644bbd11692e2fb0e08be6fc1773cbe6"""
+"4","en-US",
+
+# pipe
+| id | feed_language | etag                                 |
+|:---|:--------------|:-------------------------------------|
+| 2  | pl-PL         | W/"b3f32cfa11d5f140d28c246bf6029f3b" |
+| 3  | pl-PL         | "644bbd11692e2fb0e08be6fc1773cbe6"   |
+| 4  | en-US         |                                      |
+
+#orgtbl || github
+| id | feed_language | etag                                 |
+|----+---------------+--------------------------------------|
+| 2  | pl-PL         | W/"b3f32cfa11d5f140d28c246bf6029f3b" |
+| 3  | pl-PL         | "644bbd11692e2fb0e08be6fc1773cbe6"   |
+| 4  | en-US         |                                      |
+
+# rst
+==  =============  ====================================
+id  feed_language  etag
+==  =============  ====================================
+2   pl-PL          W/"b3f32cfa11d5f140d28c246bf6029f3b"
+3   pl-PL          "644bbd11692e2fb0e08be6fc1773cbe6"
+4   en-US
+==  =============  ====================================
+
+# psql
++----+---------------+--------------------------------------+                                                                                                                                  
+| id | feed_language | etag                                 |                                                                                                                                  
+|----+---------------+--------------------------------------|                                                                                                                                  
+| 2  | pl-PL         | W/"b3f32cfa11d5f140d28c246bf6029f3b" |                                                                                                                                  
+| 3  | pl-PL         | "644bbd11692e2fb0e08be6fc1773cbe6"   |                                                                                                                                  
+| 4  | en-US         |                                      |                                                                                                                                  
++----+---------------+--------------------------------------+                                                                                                                                  
+
+# grid
++----+---------------+--------------------------------------+                                                                                                                                  
+| id | feed_language | etag                                 |                                                                                                                                  
++====+===============+======================================+                                                                                                                                  
+| 2  | pl-PL         | W/"b3f32cfa11d5f140d28c246bf6029f3b" |                                                                                                                                  
++----+---------------+--------------------------------------+                                                                                                                                  
+| 3  | pl-PL         | "644bbd11692e2fb0e08be6fc1773cbe6"   |                                                                                                                                  
++----+---------------+--------------------------------------+                                                                                                                                  
+| 4  | en-US         |                                      |                                                                                                                                  
++----+---------------+--------------------------------------+                                                                                                                                  
+
+# fancy_grid
+
+
+# minimal
+2  pl-PL  W/"b3f32cfa11d5f140d28c246bf6029f3b"
+3  pl-PL  "644bbd11692e2fb0e08be6fc1773cbe6"
+4  en-US
+
+# simple
+id  feed_language  etag
+--  -------------  ------------------------------------
+2   pl-PL          W/"b3f32cfa11d5f140d28c246bf6029f3b"
+3   pl-PL          "644bbd11692e2fb0e08be6fc1773cbe6"
+4   en-US
+
+# plain
+id  feed_language  etag
+2   pl-PL          W/"b3f32cfa11d5f140d28c246bf6029f3b"
+3   pl-PL          "644bbd11692e2fb0e08be6fc1773cbe6"
+4   en-US
+
+# jira
+|| id || feed_language || etag ||
+| 2 | pl-PL | W/"b3f32cfa11d5f140d28c246bf6029f3b" |
+| 3 | pl-PL | "644bbd11692e2fb0e08be6fc1773cbe6" |
+| 4 | en-US |  |
+
+# ascii
++----+---------------+--------------------------------------+
+| id | feed_language | etag                                 |
++----+---------------+--------------------------------------+
+| 2  | pl-PL         | W/"b3f32cfa11d5f140d28c246bf6029f3b" |
+| 3  | pl-PL         | "644bbd11692e2fb0e08be6fc1773cbe6"   |
+| 4  | en-US         |                                      |
++----+---------------+--------------------------------------+
+
+# moinmoin
+|| ''' id ''' || ''' feed_language ''' || ''' etag ''' ||
+||  2  ||  pl-PL  ||  W/"b3f32cfa11d5f140d28c246bf6029f3b"  ||
+||  3  ||  pl-PL  ||  "644bbd11692e2fb0e08be6fc1773cbe6"  ||
+||  4  ||  en-US  ||    ||
+
+# textile
+|_.  id |_. feed_language |_. etag |
+| 2  | pl-PL | W/"b3f32cfa11d5f140d28c246bf6029f3b" |
+| 3  | pl-PL | "644bbd11692e2fb0e08be6fc1773cbe6" |
+| 4  | en-US |  |
+
+# latex_booktabs
+\begin{tabular}{lll}
+\toprule
+ id & feed\_language & etag \\
+\midrule
+ 2 & pl-PL & W/"b3f32cfa11d5f140d28c246bf6029f3b" \\
+ 3 & pl-PL & "644bbd11692e2fb0e08be6fc1773cbe6" \\
+ 4 & en-US &  \\
+\bottomrule
+\end{tabular}
+
+# latex
+\begin{tabular}{lll}
+\hline
+ id & feed\_language & etag \\
+\hline
+ 2 & pl-PL & W/"b3f32cfa11d5f140d28c246bf6029f3b" \\
+ 3 & pl-PL & "644bbd11692e2fb0e08be6fc1773cbe6" \\
+ 4 & en-US &  \\
+\hline
+\end{tabular}
+
+# sql instert
+INSERT INTO "feeds" ("id", "feed_language", "etag") VALUES                                                   │~                                                                                
+  ('2', 'pl-PL', 'W/"b3f32cfa11d5f140d28c246bf6029f3b"')                                                     │~                                                                                
+, ('3', 'pl-PL', '"644bbd11692e2fb0e08be6fc1773cbe6"')                                                       │~                                                                                
+, ('4', 'en-US', '')                                                                                         │~                                                                                
+;
+
+# vertical
+-[ RECORD 1 ]-------------------------
+id            | 2
+feed_language | pl-PL
+etag          | W/"b3f32cfa11d5f140d28c246bf6029f3b"
+-[ RECORD 2 ]-------------------------
+id            | 3
+feed_language | pl-PL
+etag          | "644bbd11692e2fb0e08be6fc1773cbe6"
+-[ RECORD 3 ]-------------------------
+id            | 4
+feed_language | en-US
+etag          | 
+
+# json
+[
+  {
+    "id": 2,
+    "feed_language": "pl-PL",
+    "etag": "b3f32cfa11d5f140d28c246bf6029f3b"
+  },
+  {
+    "id": 3,
+    "feed_language": "pl-PL",
+    "etag": "644bbd11692e2fb0e08be6fc1773cbe6"
+  },
+  {
+    "id": 4,
+    "feed_language": "en-US",
+    "etag": null
+  }
+]
+
+# sql update
+UPDATE "feeds" SET                                                                                           │   31 # sql instert                                                              
+  "feed_language" = 'pl-PL'                                                                                  │   32 INSERT INTO "feeds" ("id", "feed_language", "etag") VALUES                 
+, "etag" = 'W/"b3f32cfa11d5f140d28c246bf6029f3b"'                                                            │   33 ▏ ('2', 'pl-PL', 'W/"b3f32cfa11d5f140d28c246bf6029f3b"')                   
+WHERE "id" = '2';                                                                                            │   34 , ('3', 'pl-PL', '"644bbd11692e2fb0e08be6fc1773cbe6"')                     
+UPDATE "feeds" SET                                                                                           │   35 , ('4', 'en-US', '')                                                       
+  "feed_language" = 'pl-PL'                                                                                  │   36 ;                                                                          
+, "etag" = '"644bbd11692e2fb0e08be6fc1773cbe6"'                                                              │~                                                                                
+WHERE "id" = '3';                                                                                            │~                                                                                
+UPDATE "feeds" SET                                                                                           │~                                                                                
+  "feed_language" = 'en-US'                                                                                  │~                                                                                
+, "etag" = ''                                                                                                │~                                                                                
+WHERE "id" = '4';
+
+# sql update 2
+UPDATE "feeds" SET
+  "etag" = 'W/"b3f32cfa11d5f140d28c246bf6029f3b"'
+WHERE "id" = '2' AND "feed_language" = 'pl-PL';
+UPDATE "feeds" SET
+  "etag" = '"644bbd11692e2fb0e08be6fc1773cbe6"'
+WHERE "id" = '3' AND "feed_language" = 'pl-PL';
+UPDATE "feeds" SET
+  "etag" = ''
+WHERE "id" = '4' AND "feed_language" = 'en-US';
+
