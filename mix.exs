@@ -2,7 +2,7 @@ defmodule Scribe.Mixfile do
   use Mix.Project
 
   @source_url "https://github.com/codedge-llc/scribe"
-  @version "0.10.0"
+  @version "0.11.0"
 
   def project do
     [

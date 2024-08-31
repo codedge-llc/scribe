@@ -184,7 +184,7 @@ iex> Scribe.print(data, alignment: :right)
 
 ### Styles
 
-Scribe supports four styling formats natively, with support for custom adapters.
+Scribe supports five styling formats natively, with support for custom adapters.
 
 _Default_
 
