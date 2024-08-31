@@ -43,7 +43,7 @@ Useful for printing large collections, such as results of database queries
 ```elixir
 # %User{id: nil, email: nil}
 
-iex(1)> User |> limit(5) |> Repo.all |> Scribe.print
+iex(1)> User |> limit(5) |> Repo.all() |> Scribe.print()
 +-------------+----------------------------+------+
 | :__struct__ | :email                     | :id  |
 +-------------+----------------------------+------+
@@ -152,6 +152,34 @@ iex> Scribe.print(data, width: 80)
 
 ```elixir
 iex> Scribe.print(data, colorize: false)
+```
+
+### Text Alignment
+
+Pass an `alignment` option of `:left`, `:center`, or `:right` for text alignment.
+Defaults to `:left`.
+
+```elixir
+iex> Scribe.print(data, alignment: :center)
+
++------------------------------+------------+--------+
+|            :body             |  :current  |  :id   |
++------------------------------+------------+--------+
+|   "A rather short string."   |    true    |  1234  |
+|   "A rather short string."   |   false    |  2222  |
+|   "A rather short string."   |    true    |  4444  |
++------------------------------+------------+--------+
+```
+
+```elixir
+iex> Scribe.print(data, alignment: :right)
++------------------------------+------------+--------+
+|                        :body |   :current |    :id |
++------------------------------+------------+--------+
+|     "A rather short string." |       true |   1234 |
+|     "A rather short string." |      false |   2222 |
+|     "A rather short string." |       true |   4444 |
++------------------------------+------------+--------+
 ```
 
 ### Styles
