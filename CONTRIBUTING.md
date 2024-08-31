@@ -1,15 +1,15 @@
-# Contribution Guidelines
+# Contributing
 
-## Steps
+## Testing
 
-1. Fork [scribe](https://github.com/codedge-llc/scribe)
-2. Run your tests: `mix test`
-3. Create your feature branch (`git checkout -b feat/my-new-feature`)
-4. Make your changes
-5. Test your changes
-6. Run the formatter: `mix format`
-7. Lint with credo: `mix credo`
-8. Commit your changes (`git commit -m 'feat: some feature'`).
-   Scribe follows the [Karma-style git commit message](http://karma-runner.github.io/1.0/dev/git-commit-msg.html)
-9. Push the branch (`git push origin feat/my-new-feature`)
-10. Create a Pull Request
+Unit tests can be run with `mix test` or `mix coveralls.html`.
+
+## Formatting
+
+This project uses Elixir's `mix format` and [Prettier](https://prettier.io) for formatting.
+Add hooks in your editor of choice to run it after a save. Be sure it respects this project's
+`.formatter.exs`.
+
+## Commits
+
+Git commit subjects use the [Karma style](http://karma-runner.github.io/5.0/dev/git-commit-msg.html).
