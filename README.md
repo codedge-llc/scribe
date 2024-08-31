@@ -5,8 +5,8 @@
 [![CI](https://github.com/codedge-llc/scribe/actions/workflows/ci.yml/badge.svg)](https://github.com/codedge-llc/scribe/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/hexpm/v/scribe.svg)](https://hex.pm/packages/scribe)
 [![Total Downloads](https://img.shields.io/hexpm/dt/scribe.svg)](https://hex.pm/packages/scribe)
-[![License](https://img.shields.io/hexpm/l/scribe.svg)](https://github.com/codedge-llc/scribe/blob/master/LICENSE.md)
-[![Last Updated](https://img.shields.io/github/last-commit/codedge-llc/scribe.svg)](https://github.com/codedge-llc/scribe/commits/master)
+[![License](https://img.shields.io/hexpm/l/scribe.svg)](https://github.com/codedge-llc/scribe/blob/main/LICENSE.md)
+[![Last Updated](https://img.shields.io/github/last-commit/codedge-llc/scribe.svg)](https://github.com/codedge-llc/scribe/commits/main)
 [![Documentation](https://img.shields.io/badge/documentation-gray)](https://hexdocs.pm/scribe/)
 
 ## Installation
@@ -16,7 +16,7 @@
 ```elixir
 def deps do
   [
-    {:scribe, "~> 0.10"}
+    {:scribe, "~> 0.11"}
   ]
 end
 ```
@@ -285,4 +285,4 @@ Git commit subjects use the [Karma style](http://karma-runner.github.io/5.0/dev/
 
 Copyright (c) 2016-2024 Codedge LLC (https://www.codedge.io/)
 
-This library is MIT licensed. See the [LICENSE](https://github.com/codedge-llc/pane/blob/master/LICENSE) for details.
+This library is MIT licensed. See the [LICENSE](https://github.com/codedge-llc/scribe/blob/main/LICENSE.md) for details.
