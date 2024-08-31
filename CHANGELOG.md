@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Removed `Scribe.auto_inspect/1`.
+- Removed `Scribe.auto_inspect?/0`.
+
 ## v0.10.0
 
 - Added `:device` option to `Scribe.print/2` for printing to a specific device.
