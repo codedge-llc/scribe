@@ -154,6 +154,34 @@ iex> Scribe.print(data, width: 80)
 iex> Scribe.print(data, colorize: false)
 ```
 
+### Text Alignment
+
+Pass an `alignment` option of `:left`, `:center`, or `:right` for text alignment.
+Defaults to `:left`.
+
+```elixir
+iex> Scribe.print(data, alignment: :center)
+
++------------------------------+------------+--------+
+|            :body             |  :current  |  :id   |
++------------------------------+------------+--------+
+|   "A rather short string."   |    true    |  1234  |
+|   "A rather short string."   |   false    |  2222  |
+|   "A rather short string."   |    true    |  4444  |
++------------------------------+------------+--------+
+```
+
+```elixir
+iex> Scribe.print(data, alignment: :right)
++------------------------------+------------+--------+
+|                        :body |   :current |    :id |
++------------------------------+------------+--------+
+|     "A rather short string." |       true |   1234 |
+|     "A rather short string." |      false |   2222 |
+|     "A rather short string." |       true |   4444 |
++------------------------------+------------+--------+
+```
+
 ### Styles
 
 Scribe supports four styling formats natively, with support for custom adapters.

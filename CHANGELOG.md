@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+**Added**
+
+- Center and right text alignment options ([#16](https://github.com/codedge-llc/scribe/pull/16)).
+
 **Changed**
 
 - Bumped minimum Elixir version to 1.13.

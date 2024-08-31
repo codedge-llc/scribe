@@ -167,6 +167,52 @@ defmodule Scribe.ScribeTest do
 
       assert actual == expected
     end
+
+    test "respects alignment: :center option" do
+      t = %{test: 1234, title: "testing"}
+
+      expected = """
+      +-------------------------+-----------------+
+      |         :title          |      :test      |
+      +-------------------------+-----------------+
+      |        "testing"        |      1234       |
+      +-------------------------+-----------------+
+      """
+
+      actual =
+        Scribe.format(
+          [t],
+          alignment: :center,
+          data: [:title, :test],
+          colorize: false,
+          width: 50
+        )
+
+      assert actual == expected
+    end
+
+    test "respects alignment: :right option" do
+      t = %{test: 1234, title: "testing"}
+
+      expected = """
+      +-------------------------+-----------------+
+      |                  :title |           :test |
+      +-------------------------+-----------------+
+      |               "testing" |            1234 |
+      +-------------------------+-----------------+
+      """
+
+      actual =
+        Scribe.format(
+          [t],
+          alignment: :right,
+          data: [:title, :test],
+          colorize: false,
+          width: 50
+        )
+
+      assert actual == expected
+    end
   end
 
   describe "print/2" do
