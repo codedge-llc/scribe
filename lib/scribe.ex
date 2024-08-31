@@ -27,40 +27,6 @@ defmodule Scribe do
         ]
 
   @doc ~S"""
-  Enables/disables auto-inspect override.
-
-  If true, Scribe will override `inspect/2` for maps and structs, printing
-  them as tables.
-
-  ## Examples
-
-      iex> Scribe.auto_inspect(true)
-      :ok
-  """
-  @spec auto_inspect(boolean) :: :ok
-  def auto_inspect(inspect?) do
-    Application.put_env(:scribe, :auto_inspect, inspect?)
-  end
-
-  @doc ~S"""
-  Returns true if Scribe is overriding `Inspect`.
-
-  ## Examples
-
-      iex> Scribe.auto_inspect?
-      true
-  """
-  def auto_inspect? do
-    compile_auto_inspect?() and
-      Application.get_env(:scribe, :auto_inspect, false)
-  end
-
-  @doc false
-  def compile_auto_inspect? do
-    Application.get_env(:scribe, :compile_auto_inspect, false)
-  end
-
-  @doc ~S"""
   Prints a table from given data.
 
   ## Examples
@@ -176,6 +142,7 @@ defmodule Scribe do
   defp fetch_keys(map) do
     map
     |> Map.keys()
+    |> Enum.sort()
     |> process_headers()
   end
 end
