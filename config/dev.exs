@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 config :scribe,
   compile_auto_inspect: true,
