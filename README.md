@@ -1,10 +1,13 @@
-[![CI](https://github.com/codedge-llc/scribe/actions/workflows/ci.yml/badge.svg)](https://github.com/codedge-llc/scribe/actions/workflows/ci.yml)
-[![Hex.pm](http://img.shields.io/hexpm/v/scribe.svg)](https://hex.pm/packages/scribe)
-[![Hex.pm](http://img.shields.io/hexpm/dt/scribe.svg)](https://hex.pm/packages/scribe)
-
 # Scribe
 
-Pretty-print tables of Elixir structs and maps. Inspired by [hirb](https://github.com/cldwalker/hirb).
+> Pretty-print tables of Elixir structs and maps. Inspired by [hirb](https://github.com/cldwalker/hirb).
+
+[![CI](https://github.com/codedge-llc/scribe/actions/workflows/ci.yml/badge.svg)](https://github.com/codedge-llc/scribe/actions/workflows/ci.yml)
+[![Version](https://img.shields.io/hexpm/v/scribe.svg)](https://hex.pm/packages/scribe)
+[![Total Downloads](https://img.shields.io/hexpm/dt/scribe.svg)](https://hex.pm/packages/scribe)
+[![License](https://img.shields.io/hexpm/l/scribe.svg)](https://github.com/codedge-llc/scribe/blob/master/LICENSE.md)
+[![Last Updated](https://img.shields.io/github/last-commit/codedge-llc/scribe.svg)](https://github.com/codedge-llc/scribe/commits/master)
+[![Documentation](https://img.shields.io/badge/documentation-gray)](https://hexdocs.pm/scribe/)
 
 ## Installation
 
@@ -25,7 +28,7 @@ keys of the first element.
 
 ```elixir
 iex(1)> data = [%{key: "value", another_key: 123},
-...(1)> [%{key: "test", another_key: :key}]
+...(1)> %{key: "test", another_key: :key}]
 iex(2)> Scribe.print(data)
 +----------------+-------------+
 | :another_key   | :key        |
@@ -228,8 +231,30 @@ iex> Scribe.print(data, style: Scribe.Style.NoBorder)
  780    "2017-03-27 14:42:34.097591Z"      "BF92748B4AAAF14A"
 ```
 
-Set a default one in your Mix config if you like:
+Set a default one in your config if you like:
 
 ```elixir
 config :scribe, style: Scribe.Style.Psql
 ```
+
+## Contributing
+
+### Testing
+
+Unit tests can be run with `mix test` or `mix coveralls.html`.
+
+### Formatting
+
+This project uses Elixir's `mix format` and [Prettier](https://prettier.io) for formatting.
+Add hooks in your editor of choice to run it after a save. Be sure it respects this project's
+`.formatter.exs`.
+
+### Commits
+
+Git commit subjects use the [Karma style](http://karma-runner.github.io/5.0/dev/git-commit-msg.html).
+
+## License
+
+Copyright (c) 2016-2024 Codedge LLC (https://www.codedge.io/)
+
+This library is MIT licensed. See the [LICENSE](https://github.com/codedge-llc/pane/blob/master/LICENSE) for details.

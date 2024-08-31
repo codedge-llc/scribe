@@ -142,6 +142,7 @@ defmodule Scribe do
   defp fetch_keys(map) do
     map
     |> Map.keys()
+    |> Enum.sort()
     |> process_headers()
   end
 end

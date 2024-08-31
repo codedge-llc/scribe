@@ -2,24 +2,61 @@ name: CI
 
 on:
   push:
-    branches: [master]
+    branches: ["master"]
   pull_request:
-    branches: [master]
+    branches: ["master"]
 
 jobs:
-  build:
-    name: Build and test
+  prettier:
+    name: Prettier
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Elixir
-        uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
-          elixir-version: "1.12.3" # Define the elixir version [required]
-          otp-version: "24.1" # Define the OTP version [required]
+          ref: ${{ github.head_ref }}
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Install Prettier
+        run: npm install --global prettier
+      - name: Run Prettier
+        run: prettier --check --no-error-on-unmatched-pattern "**/*.{json,md,yml,yaml}"
+  check:
+    name: Format/Credo
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          elixir-version: "1.17.2"
+          otp-version: "27.0.1"
       - name: Restore dependencies cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-mix-
+      - name: Install dependencies
+        run: mix deps.get
+      - name: Run formatter
+        run: mix format --check-formatted
+      - name: Run Credo
+        run: mix credo
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          elixir-version: "1.17.2"
+          otp-version: "27.0.1"
+      - name: Restore dependencies cache
+        uses: actions/cache@v3
         with:
           path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
@@ -27,4 +64,6 @@ jobs:
       - name: Install dependencies
         run: mix deps.get
       - name: Run tests
+        env:
+          TERM: xterm
         run: mix test
