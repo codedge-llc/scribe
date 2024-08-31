@@ -1,11 +1,26 @@
 defmodule Scribe.Style.Psql do
-  @moduledoc false
+  @moduledoc ~S"""
+  Psql style.
+
+  ## Examples
+
+      iex> Scribe.print(data, style: Scribe.Style.Psql)
+
+       :id   | :inserted_at                      | :key
+      -------+-----------------------------------+------------------------
+       700   | "2017-03-27 14:41:33.411442Z"     | "A2FA80D0F6DF9388"
+       890   | "2017-03-27 14:41:33.412955Z"     | "F95094328A91D950"
+       684   | "2017-03-27 14:41:33.412991Z"     | "1EAC6B28045ED644"
+       531   | "2017-03-27 14:41:33.413015Z"     | "DC2377B696355642"
+       648   | "2017-03-27 14:41:33.413037Z"     | "EA9311B4683A52B3"
+  """
 
   @behaviour Scribe.Style
 
   use Scribe.DefaultColors
 
   # Top left cell
+  @impl true
   def border_at(0, 0, _, _) do
     %Scribe.Border{
       bottom_edge: "-",

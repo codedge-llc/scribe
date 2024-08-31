@@ -1,37 +1,26 @@
 defmodule Scribe.Mixfile do
   use Mix.Project
 
+  @source_url "https://github.com/codedge-llc/scribe"
   @version "0.10.0"
 
   def project do
     [
       app: :scribe,
-      version: @version,
-      elixir: "~> 1.13",
-      source_url: "https://github.com/codedge-llc/scribe",
-      description: description(),
-      package: package(),
       build_embedded: Mix.env() == :prod,
-      start_permanent: Mix.env() == :prod,
       deps: deps(),
-      docs: [
-        main: "readme",
-        extras: ["README.md"]
-      ],
-      dialyzer: [
-        plt_add_deps: true
-      ]
+      docs: docs(),
+      dialyzer: dialyzer(),
+      elixir: "~> 1.13",
+      name: "Scribe",
+      package: package(),
+      start_permanent: Mix.env() == :prod,
+      version: @version
     ]
   end
 
-  defp description do
-    """
-    Pretty-print tables of structs and maps
-    """
-  end
-
   def application do
-    [applications: [:logger, :pane]]
+    [extra_applications: [:logger, :pane]]
   end
 
   defp deps do
@@ -44,12 +33,37 @@ defmodule Scribe.Mixfile do
     ]
   end
 
+  defp dialyzer do
+    [
+      plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
+    ]
+  end
+
+  defp docs do
+    [
+      extras: [
+        "CHANGELOG.md",
+        LICENSE: [title: "License"]
+      ],
+      formatters: ["html"],
+      main: "Scribe",
+      skip_undefined_reference_warnings_on: ["CHANGELOG.md"],
+      source_ref: "v#{@version}",
+      source_url: @source_url
+    ]
+  end
+
   defp package do
     [
-      files: ["lib", "mix.exs", "README*", "LICENSE*"],
-      maintainers: ["Henry Popp"],
+      description: "Pretty-print tables of structs and maps.",
+      files: ["lib", "mix.exs", "README*", "LICENSE*", "CHANGELOG*"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/codedge-llc/scribe"}
+      links: %{
+        "Changelog" => "https://hexdocs.pm/scribe/changelog.html",
+        "GitHub" => "https://github.com/codedge-llc/scribe",
+        "Sponsor" => "https://github.com/sponsors/codedge-llc"
+      },
+      maintainers: ["Henry Popp"]
     ]
   end
 end

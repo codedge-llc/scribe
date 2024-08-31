@@ -5,8 +5,10 @@ defmodule Scribe.DefaultColors do
 
   defmacro __using__(_) do
     quote do
+      @doc false
       def default_color(), do: IO.ANSI.default_color()
 
+      @impl true
       def color(value) when is_boolean(value), do: IO.ANSI.magenta()
       def color(value) when is_nil(value), do: IO.ANSI.magenta()
       def color(value) when is_number(value), do: IO.ANSI.yellow()

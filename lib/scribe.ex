@@ -1,14 +1,123 @@
 defmodule Scribe do
-  @moduledoc """
+  @moduledoc ~S"""
   Pretty-print tables of structs and maps
+
+  ## Usage
+
+  A common use case is printing results from an Ecto query.
+
+      # %User{id: nil, email: nil}
+
+      iex(1)> User |> limit(5) |> Repo.all() |> Scribe.print()
+      +-------------+----------------------------+------+
+      | :__struct__ | :email                     | :id  |
+      +-------------+----------------------------+------+
+      | User        | "myles_fisher@beahan.com"  | 5171 |
+      | User        | "dawson_bartell@lynch.org" | 4528 |
+      | User        | "hassan1972@langworth.com" | 1480 |
+      | User        | "kiera.schulist@koch.com"  | 2084 |
+      | User        | "cynthia1970@mann.name"    | 6599 |
+      +-------------+----------------------------+------+
+
+  ## Pagination
+
+  Scribe uses [pane](https://github.com/codedge-llc/pane) to paginate large tables.
+  Use with `Scribe.console/2`.
+
+      # %User{id: nil, email: nil, first_name: nil, last_name: nil}
+      iex(1)> User |> limit(5) |> Repo.all |> Scribe.console
+
+      +-------------+------------------------+-------------+-------+------------+
+      | :__struct__ | :email                 | :first_name | :id   | :last_name |
+      +-------------+------------------------+-------------+-------+------------+
+      | User        | "celestine_satterfield | "Gene"      | 9061  | "Krajcik"  |
+      | User        | "lynn1978@bednar.org"  | "Maeve"     | 9865  | "Gerlach"  |
+      | User        | "melisa1975@hilll.biz" | "Theodora"  | 2262  | "Wunsch"   |
+      | User        | "furman.grady@ryan.org | "Oswaldo"   | 4977  | "Simonis"  |
+      | User        | "caesar_hirthe@reynold | "Arjun"     | 3907  | "Prohaska" |
+      +-------------+------------------------+-------------+-------+------------+
+
+
+      [1 of 1] (j)next (k)prev (q)quit
+
+  ## Printing Custom Tables
+
+  `Scribe.print/2` takes a list of of columns on the `:data` options key to
+  customize output. You can use either the atom key or customize the header
+  with `{"Custom Title", :key}`.
+
+      # %User{id: nil, email: nil, first_name: nil, last_name: nil}
+
+      User
+      |> limit(5)
+      |> Repo.all
+      |> Scribe.print(data: [{"ID", :id}, :first_name, :last_name])
+
+      +------+--------------+-------------+
+      | "ID" | :first_name  | :last_name  |
+      +------+--------------+-------------+
+      | 9061 | "Gene"       | "Krajcik"   |
+      | 9865 | "Maeve"      | "Gerlach"   |
+      | 2262 | "Theodora"   | "Wunsch"    |
+      | 4977 | "Oswaldo"    | "Simonis"   |
+      | 3907 | "Arjun"      | "Prohaska"  |
+      +------+--------------+-------------+
+
+  ### Function Columns
+
+  You can specify functions that take the given row's struct or map as its only argument.
+
+      # %User{id: nil, email: nil, first_name: nil, last_name: nil}
+      results =
+        User
+        |> limit(5)
+        |> Repo.all
+        |> Scribe.print(data: [{"ID", :id}, {"Full Name", fn(x) -> "#{x.last_name}, #{x.first_name}" end}])
+
+      +--------------------------+----------------------------------------------+
+      | "ID"                     | "Full Name"                                  |
+      +--------------------------+----------------------------------------------+
+      | 9061                     | "Krajcik, Gene"                              |
+      | 9865                     | "Gerlach, Maeve"                             |
+      | 2262                     | "Wunsch, Theodora"                           |
+      | 4977                     | "Simonis, Oswaldo"                           |
+      | 3907                     | "Prohaska, Arjun"                            |
+      +--------------------------+----------------------------------------------+
+
+  ## Styling Options
+
+  ### Width
+
+  Pass a `width` option to define table width.
+
+      iex> Scribe.print(data, width: 80)
+
+      +-------------------+-----------------------------------------------------+
+      | :id               | :key                                                |
+      +-------------------+-----------------------------------------------------+
+      | 910               | "B1786AC67B4DEB19"                                  |
+      | 313               | "30CB8A2DE4750070"                                  |
+      | 25                | "D0859205FC7E7298"                                  |
+      | 647               | "8F0060AD0BD6AB04"                                  |
+      | 253               | "65509A684D619182"                                  |
+      +-------------------+-----------------------------------------------------+
+
+  ### Disable Colors
+
+      iex> Scribe.print(data, colorize: false)
+
+  ### Styles
+
+  Scribe supports five styling formats natively, with support for custom adapters.
+  See more in `Scribe.Style`.
   """
 
   alias Scribe.Table
 
-  @type data ::
-          []
-          | [...]
-          | term
+  @typedoc ~S"""
+  Printable data. Can be either a struct, map, or list of structs/maps.
+  """
+  @type data :: [map] | [struct] | map | struct
 
   @typedoc ~S"""
   Options for configuring table output.
@@ -53,6 +162,10 @@ defmodule Scribe do
     dev |> IO.puts(results)
   end
 
+  @doc ~S"""
+  Paginates data and starts a pseudo-interactive console.
+  """
+  @spec console(data, format_opts) :: no_return
   def console(results, opts \\ []) do
     results
     |> format(opts)
@@ -77,7 +190,7 @@ defmodule Scribe do
       +----------+---------+
       %{test: 1234, key: :value}
   """
-  @spec inspect(term, format_opts) :: term
+  @spec inspect(data, format_opts) :: data
   def inspect(results, opts \\ []) do
     print(results, opts)
     results
@@ -94,7 +207,7 @@ defmodule Scribe do
       iex> format(%{test: 1234}, colorize: false)
       "+---------+\n| :test   |\n+---------+\n| 1234    |\n+---------+\n"
   """
-  @spec format([] | [...] | term) :: String.t() | :ok
+  @spec format(data) :: String.t() | :ok
   def format(_results, opts \\ [])
   def format([], _opts), do: :ok
 

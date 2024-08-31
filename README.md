@@ -43,7 +43,7 @@ Useful for printing large collections, such as results of database queries
 ```elixir
 # %User{id: nil, email: nil}
 
-iex(1)> User |> limit(5) |> Repo.all |> Scribe.print
+iex(1)> User |> limit(5) |> Repo.all() |> Scribe.print()
 +-------------+----------------------------+------+
 | :__struct__ | :email                     | :id  |
 +-------------+----------------------------+------+
