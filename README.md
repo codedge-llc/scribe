@@ -5,7 +5,7 @@
 [![CI](https://github.com/codedge-llc/scribe/actions/workflows/ci.yml/badge.svg)](https://github.com/codedge-llc/scribe/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/hexpm/v/scribe.svg)](https://hex.pm/packages/scribe)
 [![Total Downloads](https://img.shields.io/hexpm/dt/scribe.svg)](https://hex.pm/packages/scribe)
-[![License](https://img.shields.io/hexpm/l/scribe.svg)](https://github.com/codedge-llc/scribe/blob/main/LICENSE.md)
+[![License](https://img.shields.io/hexpm/l/scribe.svg)](https://github.com/codedge-llc/scribe/blob/main/LICENSE)
 [![Last Updated](https://img.shields.io/github/last-commit/codedge-llc/scribe.svg)](https://github.com/codedge-llc/scribe/commits/main)
 [![Documentation](https://img.shields.io/badge/documentation-gray)](https://hexdocs.pm/scribe/)
 
@@ -285,4 +285,4 @@ Git commit subjects use the [Karma style](http://karma-runner.github.io/5.0/dev/
 
 Copyright (c) 2016-2024 Codedge LLC (https://www.codedge.io/)
 
-This library is MIT licensed. See the [LICENSE](https://github.com/codedge-llc/scribe/blob/main/LICENSE.md) for details.
+This library is MIT licensed. See the [LICENSE](https://github.com/codedge-llc/scribe/blob/main/LICENSE) for details.
