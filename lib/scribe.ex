@@ -280,8 +280,7 @@ defmodule Scribe do
 
   defp fetch_keys(map) do
     map
-    |> Map.keys()
-    |> Enum.sort()
+    |> Scribe.Encoder.headers()
     |> process_headers()
   end
 end
