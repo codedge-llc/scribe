@@ -2,7 +2,7 @@ defmodule Scribe.Mixfile do
   use Mix.Project
 
   @source_url "https://github.com/codedge-llc/scribe"
-  @version "0.11.0"
+  @version "0.12.0"
 
   def project do
     [
@@ -11,13 +11,18 @@ defmodule Scribe.Mixfile do
       deps: deps(),
       docs: docs(),
       dialyzer: dialyzer(),
-      elixir: "~> 1.13",
+      elixir: "~> 1.14",
+      elixirc_paths: elixirc_paths(Mix.env()),
       name: "Scribe",
       package: package(),
       start_permanent: Mix.env() == :prod,
       version: @version
     ]
   end
+
+  defp elixirc_paths(:dev), do: ["lib", "test/support"]
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 
   def application do
     [extra_applications: [:logger, :pane]]
@@ -46,6 +51,19 @@ defmodule Scribe.Mixfile do
         LICENSE: [title: "License"]
       ],
       formatters: ["html"],
+      groups_for_modules: [
+        "Available Styles": [
+          Scribe.Style.Default,
+          Scribe.Style.GithubMarkdown,
+          Scribe.Style.NoBorder,
+          Scribe.Style.Pseudo,
+          Scribe.Style.Psql
+        ],
+        "Custom Styles": [
+          Scribe.Border,
+          Scribe.Style
+        ]
+      ],
       main: "Scribe",
       skip_undefined_reference_warnings_on: ["CHANGELOG.md"],
       source_ref: "v#{@version}",
