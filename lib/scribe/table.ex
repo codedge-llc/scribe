@@ -4,17 +4,20 @@ defmodule Scribe.Table do
   alias Scribe.Style
   alias Scribe.Formatter.{Index, Line}
 
+  @typep width :: :infinity | pos_integer()
+  @typep widths :: [non_neg_integer()]
+
   @spec table_style(keyword()) :: module()
   def table_style(opts) do
     opts[:style] || Style.default()
   end
 
-  @spec total_width() :: :infinity | pos_integer()
+  @spec total_width() :: width()
   def total_width do
     Application.get_env(:scribe, :width, :infinity)
   end
 
-  @spec printable_width(keyword()) :: :infinity | integer()
+  @spec printable_width(keyword()) :: width()
   def printable_width(opts) do
     case opts[:width] || total_width() do
       :infinity -> :infinity
@@ -56,7 +59,7 @@ defmodule Scribe.Table do
     end)
   end
 
-  @spec get_max_widths(list(), pos_integer(), pos_integer()) :: [non_neg_integer()]
+  @spec get_max_widths(list(), pos_integer(), pos_integer()) :: widths()
   defp get_max_widths(data, rows, cols) do
     for c <- 0..(cols - 1) do
       data
@@ -74,7 +77,7 @@ defmodule Scribe.Table do
     |> String.length()
   end
 
-  @spec distribute_widths([non_neg_integer()], :infinity | pos_integer()) :: [non_neg_integer()]
+  @spec distribute_widths(widths(), width()) :: widths()
   defp distribute_widths(widths, :infinity) do
     widths
   end
