@@ -4,14 +4,17 @@ defmodule Scribe.Table do
   alias Scribe.Style
   alias Scribe.Formatter.{Index, Line}
 
+  @spec table_style(keyword()) :: module()
   def table_style(opts) do
     opts[:style] || Style.default()
   end
 
+  @spec total_width() :: :infinity | pos_integer()
   def total_width do
     Application.get_env(:scribe, :width, :infinity)
   end
 
+  @spec printable_width(keyword()) :: :infinity | integer()
   def printable_width(opts) do
     case opts[:width] || total_width() do
       :infinity -> :infinity
@@ -19,6 +22,7 @@ defmodule Scribe.Table do
     end
   end
 
+  @spec format(list(), pos_integer(), pos_integer(), keyword()) :: String.t()
   def format(data, rows, cols, opts \\ []) do
     total_width = printable_width(opts)
 

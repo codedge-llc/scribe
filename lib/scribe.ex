@@ -154,11 +154,11 @@ defmodule Scribe do
   - `:width` - Defines table width. Defaults to `:infinite`
   """
   @type format_opts :: [
-          alignment: atom,
-          colorize: boolean,
+          alignment: atom(),
+          colorize: boolean(),
           data: [...],
-          style: module,
-          width: integer
+          style: module(),
+          width: integer()
         ]
 
   @doc ~S"""
@@ -177,7 +177,7 @@ defmodule Scribe do
       +----------+---------+
       :ok
   """
-  @spec print(data, format_opts) :: :ok
+  @spec print(data(), format_opts()) :: :ok
   def print(_results, opts \\ [])
 
   def print([], _opts), do: :ok
@@ -191,7 +191,7 @@ defmodule Scribe do
   @doc ~S"""
   Paginates data and starts a pseudo-interactive console.
   """
-  @spec console(data, format_opts) :: no_return
+  @spec console(data(), format_opts()) :: :ok
   def console(results, opts \\ []) do
     results
     |> format(opts)
@@ -216,7 +216,7 @@ defmodule Scribe do
       +----------+---------+
       %{test: 1234, key: :value}
   """
-  @spec inspect(data, format_opts) :: data
+  @spec inspect(data(), format_opts()) :: data()
   def inspect(results, opts \\ []) do
     print(results, opts)
     results
@@ -233,7 +233,7 @@ defmodule Scribe do
       iex> format(%{test: 1234}, colorize: false)
       "+---------+\n| :test   |\n+---------+\n| 1234    |\n+---------+\n"
   """
-  @spec format(data) :: String.t() | :ok
+  @spec format(data()) :: String.t() | :ok
   def format(_results, opts \\ [])
   def format([], _opts), do: :ok
 

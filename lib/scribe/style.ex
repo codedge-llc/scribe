@@ -22,7 +22,7 @@ defmodule Scribe.Style do
 
   Defaults to `Scribe.Style.Default` if not specified.
   """
-  @spec default :: module
+  @spec default() :: module()
   def default do
     Application.get_env(:scribe, :style, Scribe.Style.Default)
   end

@@ -26,25 +26,25 @@ defmodule Scribe.Style.GithubMarkdown do
       bottom_edge: "-",
       bottom_left_corner: "|",
       bottom_right_corner: "|",
+      left_edge: "|",
+      right_edge: "|",
       top_edge: " ",
       top_left_corner: " ",
-      top_right_corner: " ",
-      left_edge: "|",
-      right_edge: "|"
+      top_right_corner: " "
     }
   end
 
   # All other cells
   def border_at(_, _, _, _) do
     %Scribe.Border{
-      top_left_corner: "",
-      top_edge: "",
-      top_right_corner: "",
-      right_edge: "|",
-      bottom_right_corner: "",
       bottom_edge: "",
       bottom_left_corner: "",
-      left_edge: "|"
+      bottom_right_corner: "",
+      left_edge: "|",
+      right_edge: "|",
+      top_edge: "",
+      top_left_corner: "",
+      top_right_corner: ""
     }
   end
 end

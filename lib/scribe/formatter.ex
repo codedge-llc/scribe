@@ -1,14 +1,30 @@
 defmodule Scribe.Formatter.Index do
   @moduledoc false
-  defstruct row: 0, row_max: 0, col: 0, col_max: 0
+  defstruct col: 0, col_max: 0, row: 0, row_max: 0
+
+  @type t() :: %__MODULE__{
+          col: non_neg_integer(),
+          col_max: non_neg_integer(),
+          row: non_neg_integer(),
+          row_max: non_neg_integer()
+        }
 end
 
 defmodule Scribe.Formatter.Line do
   @moduledoc false
-  defstruct data: [], widths: [], style: nil, opts: [], index: nil
+  defstruct data: [], index: nil, opts: [], style: nil, widths: []
+
+  @type t() :: %__MODULE__{
+          data: list(),
+          index: Scribe.Formatter.Index.t() | nil,
+          opts: keyword(),
+          style: module() | nil,
+          widths: [non_neg_integer()]
+        }
 
   alias Scribe.Formatter.{Index, Line}
 
+  @spec format(t()) :: String.t()
   def format(%Line{index: %Index{row: 0}} = line) do
     top(line) <> data(line) <> bottom(line)
   end
@@ -17,6 +33,7 @@ defmodule Scribe.Formatter.Line do
     data(line) <> bottom(line)
   end
 
+  @spec data(t()) :: String.t()
   def data(%Line{} = line) do
     %Line{
       data: row,
@@ -52,6 +69,7 @@ defmodule Scribe.Formatter.Line do
     left_edge <> line <> "\n"
   end
 
+  @spec cell(term(), non_neg_integer(), atom()) :: String.t()
   def cell(x, width, alignment \\ :left) do
     len = min(String.length(" #{inspect(x)} "), width)
 
@@ -73,6 +91,7 @@ defmodule Scribe.Formatter.Line do
     end
   end
 
+  @spec cell_value(term(), non_neg_integer(), pos_integer()) :: String.t()
   def cell_value(x, padding, max_width) when padding >= 0 do
     truncate(" #{inspect(x)}#{String.duplicate(" ", padding)} ", max_width)
   end
@@ -81,10 +100,12 @@ defmodule Scribe.Formatter.Line do
     String.slice(elem, 0..width)
   end
 
+  @spec colorize(String.t(), String.t()) :: String.t()
   def colorize(string, color) do
     "#{color}#{string}#{IO.ANSI.reset()}"
   end
 
+  @spec top(t()) :: String.t()
   def top(%Line{widths: widths, style: style, index: index, opts: opts}) do
     border = style.border_at(index.row, 0, index.row_max, index.col_max)
     top_left = border.top_left_corner
@@ -107,6 +128,7 @@ defmodule Scribe.Formatter.Line do
     color_prefix <> top_left <> add_newline(line)
   end
 
+  @spec bottom(t()) :: String.t()
   def bottom(%Line{widths: widths, style: style, index: index}) do
     border = style.border_at(index.row, 0, index.row_max, index.col_max)
     bottom_left = border.bottom_left_corner
@@ -122,6 +144,7 @@ defmodule Scribe.Formatter.Line do
     bottom_left <> add_newline(line)
   end
 
+  @spec add_newline(String.t()) :: String.t()
   def add_newline(""), do: ""
   def add_newline(line), do: line <> "\n"
 end

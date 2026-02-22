@@ -26,81 +26,81 @@ defmodule Scribe.Style.Psql do
       bottom_edge: "-",
       bottom_left_corner: "",
       bottom_right_corner: "+",
+      left_edge: "",
+      right_edge: "|",
       top_edge: " ",
       top_left_corner: "",
-      top_right_corner: " ",
-      left_edge: "",
-      right_edge: "|"
+      top_right_corner: " "
     }
   end
 
   # Top right cell
   def border_at(0, col, _, max) when col == max - 1 do
     %Scribe.Border{
-      top_left_corner: " ",
-      top_edge: " ",
-      top_right_corner: "",
-      right_edge: "",
-      bottom_right_corner: "",
       bottom_edge: "-",
       bottom_left_corner: "+",
-      left_edge: "|"
+      bottom_right_corner: "",
+      left_edge: "|",
+      right_edge: "",
+      top_edge: " ",
+      top_left_corner: " ",
+      top_right_corner: ""
     }
   end
 
   # All other top-row cells
   def border_at(0, _, _, _) do
     %Scribe.Border{
-      top_left_corner: " ",
-      top_edge: " ",
-      top_right_corner: " ",
-      right_edge: "|",
-      bottom_right_corner: "+",
       bottom_edge: "-",
       bottom_left_corner: "+",
-      left_edge: "|"
+      bottom_right_corner: "+",
+      left_edge: "|",
+      right_edge: "|",
+      top_edge: " ",
+      top_left_corner: " ",
+      top_right_corner: " "
     }
   end
 
   # First column cells
   def border_at(_, 0, _, _) do
     %Scribe.Border{
-      top_left_corner: "",
-      top_edge: "",
-      top_right_corner: "",
-      right_edge: "|",
-      bottom_right_corner: "",
       bottom_edge: "",
       bottom_left_corner: "",
-      left_edge: ""
+      bottom_right_corner: "",
+      left_edge: "",
+      right_edge: "|",
+      top_edge: "",
+      top_left_corner: "",
+      top_right_corner: ""
     }
   end
 
   # Last column cells
   def border_at(_, col, _, max) when col == max - 1 do
     %Scribe.Border{
-      top_left_corner: "",
-      top_edge: "",
-      top_right_corner: "",
-      right_edge: "",
-      bottom_right_corner: "",
       bottom_edge: "",
       bottom_left_corner: "",
-      left_edge: "|"
+      bottom_right_corner: "",
+      left_edge: "|",
+      right_edge: "",
+      top_edge: "",
+      top_left_corner: "",
+      top_right_corner: ""
     }
   end
 
   # All other cells
   def border_at(_, _, _, _) do
     %Scribe.Border{
-      top_left_corner: "",
-      top_edge: "",
-      top_right_corner: "",
-      right_edge: "|",
-      bottom_right_corner: "",
       bottom_edge: "",
       bottom_left_corner: "",
-      left_edge: "|"
+      bottom_right_corner: "",
+      left_edge: "|",
+      right_edge: "|",
+      top_edge: "",
+      top_left_corner: "",
+      top_right_corner: ""
     }
   end
 end
