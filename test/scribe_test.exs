@@ -246,4 +246,44 @@ defmodule Scribe.ScribeTest do
     fun = fn -> assert Scribe.inspect(val) == val end
     capture_io(fun)
   end
+
+  describe "format/2 edge cases" do
+    test "returns :ok for empty list" do
+      assert Scribe.format([]) == :ok
+    end
+
+    test "returns :ok for empty list with opts" do
+      assert Scribe.format([], colorize: false) == :ok
+    end
+  end
+
+  describe "print/2 edge cases" do
+    test "returns :ok for empty list" do
+      assert Scribe.print([]) == :ok
+    end
+
+    test "returns :ok for empty list with opts" do
+      assert Scribe.print([], colorize: false) == :ok
+    end
+  end
+
+  describe "inspect/2 edge cases" do
+    test "returns empty list for empty list" do
+      assert Scribe.inspect([]) == []
+    end
+  end
+
+  describe "console/2" do
+    test "formats and paginates data" do
+      capture_io("q\n", fn ->
+        Scribe.console(%{test: 1234}, colorize: false)
+      end)
+    end
+
+    test "works with default opts" do
+      capture_io("q\n", fn ->
+        Scribe.console(%{test: 1234})
+      end)
+    end
+  end
 end

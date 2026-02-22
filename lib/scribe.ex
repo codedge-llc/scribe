@@ -154,11 +154,11 @@ defmodule Scribe do
   - `:width` - Defines table width. Defaults to `:infinite`
   """
   @type format_opts :: [
-          alignment: atom,
-          colorize: boolean,
+          alignment: atom(),
+          colorize: boolean(),
           data: [...],
-          style: module,
-          width: integer
+          style: module(),
+          width: integer()
         ]
 
   @doc ~S"""
@@ -177,21 +177,21 @@ defmodule Scribe do
       +----------+---------+
       :ok
   """
-  @spec print(data, format_opts) :: :ok
+  @spec print(data(), format_opts()) :: :ok
   def print(_results, opts \\ [])
 
   def print([], _opts), do: :ok
 
   def print(results, opts) do
-    dev = opts |> Keyword.get(:device, :stdio)
-    results = results |> format(opts)
-    dev |> IO.puts(results)
+    dev = Keyword.get(opts, :device, :stdio)
+    results = format(results, opts)
+    IO.puts(dev, results)
   end
 
   @doc ~S"""
   Paginates data and starts a pseudo-interactive console.
   """
-  @spec console(data, format_opts) :: no_return
+  @spec console(data(), format_opts()) :: :ok
   def console(results, opts \\ []) do
     results
     |> format(opts)
@@ -216,7 +216,7 @@ defmodule Scribe do
       +----------+---------+
       %{test: 1234, key: :value}
   """
-  @spec inspect(data, format_opts) :: data
+  @spec inspect(data(), format_opts()) :: data()
   def inspect(results, opts \\ []) do
     print(results, opts)
     results
@@ -233,7 +233,7 @@ defmodule Scribe do
       iex> format(%{test: 1234}, colorize: false)
       "+---------+\n| :test   |\n+---------+\n| 1234    |\n+---------+\n"
   """
-  @spec format(data) :: String.t() | :ok
+  @spec format(data(), format_opts()) :: String.t() | :ok
   def format(_results, opts \\ [])
   def format([], _opts), do: :ok
 
@@ -251,24 +251,31 @@ defmodule Scribe do
     Table.format(table, Enum.count(table), Enum.count(keys), opts)
   end
 
+  @spec map_string_values([map()]) :: [term()]
   defp map_string_values(keys), do: Enum.map(keys, &string_value(&1))
+
+  @spec map_string_values(map() | struct(), [map()]) :: [term()]
   defp map_string_values(row, keys), do: Enum.map(keys, &string_value(row, &1))
 
+  @spec string_value(map()) :: term()
   defp string_value(%{name: name, key: _key}) do
     name
   end
 
+  @spec string_value(map() | struct(), map()) :: term()
   defp string_value(map, %{name: _name, key: key}) when is_function(key) do
-    map |> key.()
+    key.(map)
   end
 
   defp string_value(map, %{name: _name, key: key}) do
-    map |> Map.get(key)
+    Map.get(map, key)
   end
 
+  @spec fetch_keys([map() | struct()], list() | nil) :: [map()]
   defp fetch_keys([first | _rest], nil), do: fetch_keys(first)
   defp fetch_keys(_list, opts), do: process_headers(opts)
 
+  @spec process_headers(list()) :: [map()]
   defp process_headers(opts) do
     for opt <- opts do
       case opt do
@@ -278,6 +285,7 @@ defmodule Scribe do
     end
   end
 
+  @spec fetch_keys(map() | struct()) :: [map()]
   defp fetch_keys(map) do
     map
     |> Map.keys()

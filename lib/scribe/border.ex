@@ -13,24 +13,24 @@ defmodule Scribe.Border do
   +--------+
   ```
   """
-  defstruct top_left_corner: "",
-            top_edge: "",
-            top_right_corner: "",
-            right_edge: "",
-            bottom_right_corner: "",
-            bottom_edge: "",
+  defstruct bottom_edge: "",
             bottom_left_corner: "",
-            left_edge: ""
+            bottom_right_corner: "",
+            left_edge: "",
+            right_edge: "",
+            top_edge: "",
+            top_left_corner: "",
+            top_right_corner: ""
 
   @type t :: %__MODULE__{
-          top_left_corner: String.t(),
-          top_edge: String.t(),
-          top_right_corner: String.t(),
-          right_edge: String.t(),
-          bottom_right_corner: String.t(),
           bottom_edge: String.t(),
           bottom_left_corner: String.t(),
-          left_edge: String.t()
+          bottom_right_corner: String.t(),
+          left_edge: String.t(),
+          right_edge: String.t(),
+          top_edge: String.t(),
+          top_left_corner: String.t(),
+          top_right_corner: String.t()
         }
 
   @doc ~S"""
@@ -40,27 +40,27 @@ defmodule Scribe.Border do
 
       iex> new("+", "|", "-")
       %Scribe.Border{
-        top_left_corner: "+",
-        top_edge: "-",
-        top_right_corner: "+",
-        right_edge: "|",
-        bottom_right_corner: "+",
         bottom_edge: "-",
         bottom_left_corner: "+",
-        left_edge: "|"
+        bottom_right_corner: "+",
+        left_edge: "|",
+        right_edge: "|",
+        top_edge: "-",
+        top_left_corner: "+",
+        top_right_corner: "+"
       }
   """
-  @spec new(String.t(), String.t(), String.t()) :: t
+  @spec new(String.t(), String.t(), String.t()) :: t()
   def new(corner, v_edge, h_edge) do
     %__MODULE__{
-      top_left_corner: corner,
-      top_edge: h_edge,
-      top_right_corner: corner,
-      right_edge: v_edge,
-      bottom_right_corner: corner,
       bottom_edge: h_edge,
       bottom_left_corner: corner,
-      left_edge: v_edge
+      bottom_right_corner: corner,
+      left_edge: v_edge,
+      right_edge: v_edge,
+      top_edge: h_edge,
+      top_left_corner: corner,
+      top_right_corner: corner
     }
   end
 end

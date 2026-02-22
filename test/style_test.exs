@@ -106,4 +106,40 @@ defmodule Scribe.StyleTest do
       assert actual == expected
     end
   end
+
+  describe "colorized output" do
+    @color_data [
+      %{a: true, b: nil, c: 42, d: "hello", e: :ok, f: {1, 2}}
+    ]
+
+    test "default style with colors" do
+      result = Scribe.format(@color_data, style: Scribe.Style.Default)
+      assert is_binary(result)
+      assert result =~ IO.ANSI.reset()
+    end
+
+    test "psql style with colors" do
+      result = Scribe.format(@color_data, style: Scribe.Style.Psql)
+      assert is_binary(result)
+      assert result =~ IO.ANSI.reset()
+    end
+
+    test "github_markdown style with colors" do
+      result = Scribe.format(@color_data, style: Scribe.Style.GithubMarkdown)
+      assert is_binary(result)
+      assert result =~ IO.ANSI.reset()
+    end
+
+    test "pseudo style with colors" do
+      result = Scribe.format(@color_data, style: Scribe.Style.Pseudo)
+      assert is_binary(result)
+      assert result =~ IO.ANSI.reset()
+    end
+
+    test "no_border style with colors" do
+      result = Scribe.format(@color_data, style: Scribe.Style.NoBorder)
+      assert is_binary(result)
+      assert result =~ IO.ANSI.reset()
+    end
+  end
 end
