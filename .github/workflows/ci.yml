@@ -12,9 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.head_ref }}
+        uses: actions/checkout@v4
       - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
@@ -27,7 +25,7 @@ jobs:
     name: Format/Credo
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Elixir
         uses: erlef/setup-beam@v1
         with:
@@ -45,11 +43,37 @@ jobs:
         run: mix format --check-formatted
       - name: Run Credo
         run: mix credo
+  dialyzer:
+    name: Dialyzer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          elixir-version: "1.19"
+          otp-version: "28"
+      - name: Restore dependencies cache
+        uses: actions/cache@v3
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-mix-
+      - name: Restore dialyzer cache
+        uses: actions/cache@v3
+        with:
+          path: priv/plts
+          key: ${{ runner.os }}-mix-plts-${{ hashFiles('./priv/plts/') }}
+          restore-keys: ${{ runner.os }}-mix-plts-
+      - name: Install dependencies
+        run: mix deps.get
+      - name: Run dialyzer
+        run: mix dialyzer
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Elixir
         uses: erlef/setup-beam@v1
         with:
