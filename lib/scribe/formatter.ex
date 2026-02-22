@@ -96,6 +96,7 @@ defmodule Scribe.Formatter.Line do
     truncate(" #{inspect(x)}#{String.duplicate(" ", padding)} ", max_width)
   end
 
+  @spec truncate(String.t(), non_neg_integer()) :: String.t()
   defp truncate(elem, width) do
     String.slice(elem, 0..width)
   end

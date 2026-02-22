@@ -3,7 +3,7 @@ defmodule Scribe.TableTest do
 
   alias Scribe.Table
 
-  test "format/3 returns formatted table string" do
+  test "format/4 returns formatted table string" do
     data = [
       [~s("test"), ~s(1234), ~s("longer string")],
       [~s(0), ~s(nil), ~s(:whatever)]
@@ -20,6 +20,16 @@ defmodule Scribe.TableTest do
     assert Table.format(data, 2, 3, colorize: false) == expected
   end
 
+  test "format/3 works with default opts" do
+    data = [
+      [~s("a"), ~s("b")],
+      [~s(1), ~s(2)]
+    ]
+
+    result = Table.format(data, 2, 2)
+    assert is_binary(result)
+  end
+
   describe "table_style/1" do
     test "returns default style when no style option" do
       assert Table.table_style([]) == Scribe.Style.Default
@@ -33,6 +43,13 @@ defmodule Scribe.TableTest do
   describe "total_width/0" do
     test "defaults to :infinity" do
       assert Table.total_width() == :infinity
+    end
+
+    test "returns configured width" do
+      Application.put_env(:scribe, :width, 120)
+      assert Table.total_width() == 120
+    after
+      Application.delete_env(:scribe, :width)
     end
   end
 

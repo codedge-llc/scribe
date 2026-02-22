@@ -2,49 +2,49 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [Unreleased]
 
-**Added**
+### Added
 
 - Better documented typespecs.
-- Unit tests for `Scribe.Table` and `Scribe.Formatter.Line`.
+- Full unit test coverage.
 
-## v0.11.0 - 2024-08-31
+## [0.11.0] - 2024-08-31
 
-**Added**
+### Added
 
 - Center and right text alignment options ([#16](https://github.com/codedge-llc/scribe/pull/16)).
 
-**Changed**
+### Changed
 
 - Bumped minimum Elixir version to 1.13.
 
-**Removed**
+### Removed
 
 - Removed `Scribe.auto_inspect/1`.
 - Removed `Scribe.auto_inspect?/0`.
 
-## v0.10.0 - 2019-05-29
+## [0.10.0] - 2019-05-29
 
 - Added `:device` option to `Scribe.print/2` for printing to a specific device.
   Defaults to `:stdio`
 
-## v0.9.0 - 2019-05-04
+## [0.9.0] - 2019-05-04
 
 - `NoBorder` style added.
 
-## v0.8.2 - 2019-01-17
+## [0.8.2] - 2019-01-17
 
 - Support for Elixir `v1.8`
 
-## v0.8.1 - 2018-07-25
+## [0.8.1] - 2018-07-25
 
 - Support for Elixir `v1.7`
 
-## v0.8.0 - 2019-03-15
+## [0.8.0] - 2019-03-15
 
 - `:compile_auto_inspect` and `:auto_inspect` config options, both default
   to `false`.
@@ -68,11 +68,11 @@ true again.
 If auto-inspect is not compiled (or disabled), `Scribe.print/2` and similar
 functions will continue to work as normal.
 
-## v0.7.0 - 2018-02-19
+## [0.7.0] - 2018-02-19
 
 - Pseudographics style added.
 
-## v0.6.0 - 2018-02-16
+## [0.6.0] - 2018-02-16
 
 - Overrides Inspect protocol for `List` and `Map`. These types will now
   automatically return in Scribe's table format. Disabled by default.
@@ -80,11 +80,11 @@ functions will continue to work as normal.
 - `Scribe.enable`, `Scribe.disable`, and `Scribe.enabled?` added.
 - Minimum Elixir version bumped to `1.5`.
 
-## v0.5.1 - 2018-01-06
+## [0.5.1] - 2018-01-06
 
 - Bump pane dependency to v0.2.0.
 
-## v0.5.0 - 2017-03-27
+## [0.5.0] - 2017-03-27
 
 - `@behaviour Scribe.Style` implemented (See `/style` for example adapters)
 - Colorized output.

@@ -56,6 +56,7 @@ defmodule Scribe.Table do
     end)
   end
 
+  @spec get_max_widths(list(), pos_integer(), pos_integer()) :: [non_neg_integer()]
   defp get_max_widths(data, rows, cols) do
     for c <- 0..(cols - 1) do
       data
@@ -65,6 +66,7 @@ defmodule Scribe.Table do
     end
   end
 
+  @spec get_width(term()) :: non_neg_integer()
   defp get_width(value) do
     value
     |> inspect()
@@ -72,6 +74,7 @@ defmodule Scribe.Table do
     |> String.length()
   end
 
+  @spec distribute_widths([non_neg_integer()], :infinity | pos_integer()) :: [non_neg_integer()]
   defp distribute_widths(widths, :infinity) do
     widths
   end
@@ -84,6 +87,7 @@ defmodule Scribe.Table do
     end)
   end
 
+  @spec get_column_widths(list(), pos_integer(), non_neg_integer()) :: [term()]
   defp get_column_widths(data, rows, col) do
     for row <- 0..(rows - 1) do
       data
