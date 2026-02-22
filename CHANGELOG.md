@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Better documented typespecs.
-- Full unit test coverage.
+- Better documented typespecs. ([#31](https://github.com/codedge-llc/scribe/pull/31))
+- Full unit test coverage. ([#31](https://github.com/codedge-llc/scribe/pull/31))
 
 ## [0.11.0] - 2024-08-31
 
